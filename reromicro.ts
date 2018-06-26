@@ -1,9 +1,9 @@
 
 /**
- * Custom blocks
+ * rero:micro Blocks
  */
 //% weight=99 color=#ff8000 icon="\uf00c" block="Rero Micro"
-namespace custom {
+namespace reromicro {
 
     //==============================================
     //  Line Sensors
