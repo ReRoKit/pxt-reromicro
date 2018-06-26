@@ -1,6 +1,6 @@
-# reromicro
+# rero:micro Package for Microsoft MakeCode
 
-MakeCode Package for rero:micro robot.
+
 
 ## License
 
