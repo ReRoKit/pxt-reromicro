@@ -1,0 +1,14 @@
+{
+    "name": "reromicro",
+    "version": "0.0.1",
+    "description": "MakeCode Package for rero:micro robot",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "reromicro.ts"
+    ],
+    "public": true
+}
