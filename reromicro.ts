@@ -90,7 +90,7 @@ namespace reromicro {
 
         let raw = pins.analogReadPin(AnalogPin.P2)
 
-        return Math.abs(raw / 11)
+        return Math.abs(raw / 10)
     }
 
 
