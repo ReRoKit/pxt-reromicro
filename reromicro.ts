@@ -129,9 +129,12 @@ namespace reromicro {
     //% weight=70
     export function ReadUltrasonic(): number {
 
-        let raw = pins.analogReadPin(AnalogPin.P2)
+        let raw = 0
+        for(let i = 0; i < 10; i++) {
+            raw += pins.analogReadPin(AnalogPin.P2)
+        }
 
-        return Math.abs(raw / 10)
+        return Math.abs(raw / 100)
     }
 
 
