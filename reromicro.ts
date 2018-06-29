@@ -115,6 +115,7 @@ namespace reromicro {
 
 
 
+
     //==============================================
     //  Ultrasonic Sensor (Analog output)
     //==============================================
@@ -141,7 +142,7 @@ namespace reromicro {
     //  Motors
     //==============================================
 
-    export enum SelectMotors {
+    export enum Motors {
         //% block="Left Motor"
         Left = 0,
         //% block="Right Motor"
@@ -267,8 +268,8 @@ namespace reromicro {
     //% speed.min=-100 speed.max=100
     //% blockGap=10
     //% weight=90
-    export function RunMotor(motor: SelectMotors, speed: number): void {
-        if (motor == 0) {
+    export function RunMotor(motor: Motors, speed: number): void {
+        if (motor == Motors.Left) {
             let nLeftSpeed = (100 - speed) * 1023 / 200
             nLeftSpeed = Math.clamp(0, 1023, nLeftSpeed);
 
@@ -276,7 +277,7 @@ namespace reromicro {
             pins.analogSetPeriod(AnalogPin.P8, 50)
             pins.digitalWritePin(DigitalPin.P12, 1)
         }
-        else if (motor == 1) {
+        else if (motor == Motors.Right) {
             let nRightSpeed = (100 + speed) * 1023 / 200
             nRightSpeed = Math.clamp(0, 1023, nRightSpeed);
 
