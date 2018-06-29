@@ -101,6 +101,12 @@ namespace reromicro {
     //  Motors
     //==============================================
 
+    export enum Motors {
+        Left = 0,
+        Right = 1,
+        Both = 2
+    }
+
     /**
      * Move Forward.
      * Speed = 0 - 100
@@ -148,17 +154,17 @@ namespace reromicro {
     }
 
     /**
-     * Spin to the Left.
+     * Turn to the Left.
      * Speed = 0 - 100
-     * @param speed to spin to the left, eg: 50
+     * @param speed to turn to the left, eg: 50
      */
     //% subcategory=Motors
-    //% blockId=rero-micro-spin-left 
-    //% block="spin left at|%speed|"
+    //% blockId=rero-micro-turn-left 
+    //% block="turn left at|%speed|"
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=97
-    export function SpinLeft(speed: number): void {
+    export function TurnLeft(speed: number): void {
         speed = Math.clamp(0, 100, speed);
         let nLeftSpeed = (100 + speed) * 1023 / 200
         let nRightSpeed = (100 + speed) * 1023 / 200
@@ -171,46 +177,20 @@ namespace reromicro {
     }
 
     /**
-     * Spin to the Right.
+     * Turn to the Right.
      * Speed = 0 - 100
-     * @param speed to spin to the right, eg: 50
+     * @param speed to turn to the right, eg: 50
      */
     //% subcategory=Motors
-    //% blockId=rero-micro-spin-right 
-    //% block="spin right at|%speed|"
+    //% blockId=rero-micro-turn-right 
+    //% block="turn right at|%speed|"
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=96
-    export function SpinRight(speed: number): void {
+    export function TurnRight(speed: number): void {
         speed = Math.clamp(0, 100, speed);
         let nLeftSpeed = (100 - speed) * 1023 / 200
         let nRightSpeed = (100 - speed) * 1023 / 200
-
-        pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
-        pins.analogWritePin(AnalogPin.P16, nRightSpeed)
-        pins.analogSetPeriod(AnalogPin.P8, 50)
-        pins.analogSetPeriod(AnalogPin.P16, 50)
-        pins.digitalWritePin(DigitalPin.P12, 1)
-    }
-
-    /**
-     * Dual Motors Speed Control.
-     * Speed = -100 (reverse) to 100 (forward)
-     * @param nLeftSpeed left motor speed, eg: 50
-     * @param nRightSpeed right motor speed, eg: 50
-     */
-    //% subcategory=Motors
-    //% blockId=rero-micro-run-motors 
-    //% block="motors left|%nLeftSpeed|right|%nRightSpeed|"
-    //% left.min=-100 left.max=100
-    //% right.min=-100 right.max=100
-    //% blockGap=10
-    //% weight=95
-    export function RunMotors(nLeftSpeed: number, nRightSpeed: number): void {
-        nLeftSpeed = (100 - nLeftSpeed) * 1023 / 200
-        nLeftSpeed = Math.clamp(0, 1023, nLeftSpeed);
-        nRightSpeed = (100 + nRightSpeed) * 1023 / 200
-        nRightSpeed = Math.clamp(0, 1023, nRightSpeed);
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
@@ -225,14 +205,59 @@ namespace reromicro {
     //% subcategory=Motors
     //% blockId=rero-micro-brake block="brake"
     //% blockGap=10
-    //% weight=94
+    //% weight=95
     export function Brake(): void {
         pins.digitalWritePin(DigitalPin.P12, 0)
         pins.analogWritePin(AnalogPin.P8, 0)
         pins.analogWritePin(AnalogPin.P16, 0)
     }
 
+    /**
+     * Run Motor(s) at selected speed.
+     * Speed = -100 (reverse) to 100 (forward)
+     * @param motor selected motor, eg: left
+     * @param speed selected speed, eg: 50
+     */
+    //% subcategory=Motors
+    //% blockId=rero-micro-run-motor
+    //% block="run|%motor|motor(s) at|%speed|"
+    //% motor.fieldEditor="gridpicker" motor.fieldOptions.columns=3
+    //% motor.fieldOptions.width="200"
+    //% speed.min=-100 speed.max=100
+    //% blockGap=10
+    //% weight=96
+    export function RunMotor(motor: Motors, speed: number): void {
+        if (motor == Motors.Left){
+            let nLeftSpeed = (100 - speed) * 1023 / 200
+            nLeftSpeed = Math.clamp(0, 1023, nLeftSpeed);
 
+            pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
+            pins.analogSetPeriod(AnalogPin.P8, 50)
+            pins.digitalWritePin(DigitalPin.P12, 1)
+        }
+        else if () {
+            let nRightSpeed = (100 + speed) * 1023 / 200
+            nRightSpeed = Math.clamp(0, 1023, nRightSpeed);
+
+            pins.analogWritePin(AnalogPin.P16, nRightSpeed)
+            pins.analogSetPeriod(AnalogPin.P16, 50)
+            pins.digitalWritePin(DigitalPin.P12, 1)
+        }
+        else {
+            let nLeftSpeed = (100 - speed) * 1023 / 200
+            nLeftSpeed = Math.clamp(0, 1023, nLeftSpeed);
+            let nRightSpeed = (100 + speed) * 1023 / 200
+            nRightSpeed = Math.clamp(0, 1023, nRightSpeed);
+
+            pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
+            pins.analogWritePin(AnalogPin.P16, nRightSpeed)
+            pins.analogSetPeriod(AnalogPin.P8, 50)
+            pins.analogSetPeriod(AnalogPin.P16, 50)
+            pins.digitalWritePin(DigitalPin.P12, 1)
+        }
+    }
+
+    
 
 
     //==============================================
