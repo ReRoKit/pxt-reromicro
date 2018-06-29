@@ -34,13 +34,13 @@ namespace reromicro {
      * @param sensor position, eg: LineSensors.Center
      */
     //% subcategory=Sensors
-    //% blockId=rero-micro-read-single-line-sensor 
+    //% blockId=rero-micro-line-detect-line-existence 
     //% block="line detected at|%sensor|sensor"
     //% blockGap=10
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
     //% sensor.fieldOptions.width="200"
     //% weight=82
-    export function ReadSingleLineSensor(sensor: LineSensors): boolean {
+    export function DetectLineExistence(sensor: LineSensors): boolean {
 
         nTimer = 1000
         let pinSensor = rightLineSensor;
@@ -69,6 +69,46 @@ namespace reromicro {
             return true
         }
         return false
+    }
+
+    /**
+     * This function reads a single micro:Racer's Line Sensor.
+     * Returns the reflected infrared intensity value.
+     * @param sensor position, eg: LineSensors.Center
+     */
+    //% subcategory=Sensors
+    //% blockId=rero-micro-line-read-ir-intensity
+    //% block="read|%sensor|sensor"
+    //% blockGap=10
+    //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
+    //% sensor.fieldOptions.width="200"
+    //% weight=80
+    export function ReadLineIrIntensity(sensor: LineSensors): number {
+
+        nTimer = 1000
+        let pinSensor = rightLineSensor;
+        if (sensor == LineSensors.Left) {
+            pinSensor = leftLineSensor;
+        }
+        else if (sensor == LineSensors.Center) {
+            pinSensor = centerLineSensor;
+        }
+
+        // Read sensor
+        bFlag = true
+        nStartTime = input.runningTimeMicros()
+        pins.digitalWritePin(pinSensor, 1)
+        control.waitMicros(10)
+        pins.setPull(pinSensor, PinPullMode.PullNone)
+        while (bFlag == true && (input.runningTimeMicros() - nStartTime) < nMaxTimer) {
+            bPinState = pins.digitalReadPin(pinSensor)
+            if (bPinState == 0) {
+                nTimer = input.runningTimeMicros() - nStartTime
+                bFlag = false
+            }
+        }
+
+        return nTimer
     }
 
 
@@ -101,9 +141,12 @@ namespace reromicro {
     //  Motors
     //==============================================
 
-    export enum Motors {
+    export enum SelectMotors {
+        //% block="Left Motor"
         Left = 0,
+        //% block="Right Motor"
         Right = 1,
+        //% block="Both Motors"
         Both = 2
     }
 
@@ -208,26 +251,24 @@ namespace reromicro {
     //% weight=95
     export function Brake(): void {
         pins.digitalWritePin(DigitalPin.P12, 0)
-        pins.analogWritePin(AnalogPin.P8, 0)
-        pins.analogWritePin(AnalogPin.P16, 0)
+        pins.analogWritePin(AnalogPin.P8, 511)
+        pins.analogWritePin(AnalogPin.P16, 511)
     }
 
     /**
      * Run Motor(s) at selected speed.
      * Speed = -100 (reverse) to 100 (forward)
-     * @param motor selected motor, eg: left
+     * @param motor selected motor, eg: Motors.Left
      * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
     //% blockId=rero-micro-run-motor
-    //% block="run|%motor|motor(s) at|%speed|"
-    //% motor.fieldEditor="gridpicker" motor.fieldOptions.columns=3
-    //% motor.fieldOptions.width="200"
+    //% block="run|%motor| at|%speed|"
     //% speed.min=-100 speed.max=100
     //% blockGap=10
-    //% weight=96
-    export function RunMotor(motor: Motors, speed: number): void {
-        if (motor == Motors.Left){
+    //% weight=90
+    export function RunMotor(motor: SelectMotors, speed: number): void {
+        if (motor == 0) {
             let nLeftSpeed = (100 - speed) * 1023 / 200
             nLeftSpeed = Math.clamp(0, 1023, nLeftSpeed);
 
@@ -235,7 +276,7 @@ namespace reromicro {
             pins.analogSetPeriod(AnalogPin.P8, 50)
             pins.digitalWritePin(DigitalPin.P12, 1)
         }
-        else if () {
+        else if (motor == 1) {
             let nRightSpeed = (100 + speed) * 1023 / 200
             nRightSpeed = Math.clamp(0, 1023, nRightSpeed);
 
@@ -257,7 +298,7 @@ namespace reromicro {
         }
     }
 
-    
+
 
 
     //==============================================
