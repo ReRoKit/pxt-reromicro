@@ -167,8 +167,8 @@ namespace reromicro {
     //% weight=99
     export function MoveForward(speed: number): void {
         speed = Math.clamp(0, 100, speed);
-        let nLeftSpeed = (100 - speed) * 1023 / 200
-        let nRightSpeed = (100 + speed) * 1023 / 200
+        let nLeftSpeed = 512 - speed * 512 / 100
+        let nRightSpeed = 511 + speed * 512 / 100
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
@@ -190,8 +190,8 @@ namespace reromicro {
     //% weight=98
     export function MoveBackward(speed: number): void {
         speed = Math.clamp(0, 100, speed);
-        let nLeftSpeed = (100 + speed) * 1023 / 200
-        let nRightSpeed = (100 - speed) * 1023 / 200
+        let nLeftSpeed = 511 + speed * 512 / 100
+        let nRightSpeed = 512 - speed * 512 / 100
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
@@ -213,8 +213,8 @@ namespace reromicro {
     //% weight=97
     export function TurnLeft(speed: number): void {
         speed = Math.clamp(0, 100, speed);
-        let nLeftSpeed = (100 + speed) * 1023 / 200
-        let nRightSpeed = (100 + speed) * 1023 / 200
+        let nLeftSpeed = 511 + speed * 512 / 100
+        let nRightSpeed = 511 + speed * 512 / 100
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
@@ -236,8 +236,8 @@ namespace reromicro {
     //% weight=96
     export function TurnRight(speed: number): void {
         speed = Math.clamp(0, 100, speed);
-        let nLeftSpeed = (100 - speed) * 1023 / 200
-        let nRightSpeed = (100 - speed) * 1023 / 200
+        let nLeftSpeed = 512 - speed * 512 / 100
+        let nRightSpeed = 512 - speed * 512 / 100
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
