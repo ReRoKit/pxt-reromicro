@@ -1,4 +1,3 @@
-
 /**
  * rero:micro Blocks
  */
@@ -8,7 +7,6 @@ namespace reromicro {
     //==============================================
     //  Line Sensors
     //==============================================
-
     let rightLineSensor = DigitalPin.P13
     let centerLineSensor = DigitalPin.P14
     let leftLineSensor = DigitalPin.P15
@@ -17,7 +15,7 @@ namespace reromicro {
     let nTimer = 1000
     let nMaxTimer = 1000
     let nStartTime = 0
-    let bPinState = 1
+    let bPinState = 1;
     let nLineThreshold = 500
 
     export enum LineSensors {
@@ -43,12 +41,12 @@ namespace reromicro {
     export function DetectLineExistence(sensor: LineSensors): boolean {
 
         nTimer = 1000
-        let pinSensor = rightLineSensor
+        let pinSensor = rightLineSensor;
         if (sensor == LineSensors.Left) {
-            pinSensor = leftLineSensor
+            pinSensor = leftLineSensor;
         }
         else if (sensor == LineSensors.Center) {
-            pinSensor = centerLineSensor
+            pinSensor = centerLineSensor;
         }
 
         // Read sensor
@@ -86,12 +84,12 @@ namespace reromicro {
     export function ReadLineIrIntensity(sensor: LineSensors): number {
 
         nTimer = 1000
-        let pinSensor = rightLineSensor
+        let pinSensor = rightLineSensor;
         if (sensor == LineSensors.Left) {
-            pinSensor = leftLineSensor
+            pinSensor = leftLineSensor;
         }
         else if (sensor == LineSensors.Center) {
-            pinSensor = centerLineSensor
+            pinSensor = centerLineSensor;
         }
 
         // Read sensor
@@ -117,39 +115,24 @@ namespace reromicro {
 
 
     //==============================================
-    //  Ultrasonic Sensor (HC-SR04)
+    //  Ultrasonic Sensor (Analog output)
     //==============================================
-
     /**
-     * Read distance in centimeters (cm) with ultrasonic sensor.
+     * Read distance (mm) using ultrasonic sensor.
      */
-    /* //% subcategory=Sensors
-    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
+    //% subcategory=Sensors
+    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(mm)"
     //% blockGap=10
     //% weight=70
     export function ReadUltrasonic(): number {
 
-        let trig = pins.digitalPin.P2
-        let echo = pins.digitalPin.P2
-        let maxCmDistance = 300
-
-        let d = 0
-        let repeat = 3
-        for(let i = 0; i < repeat; i++) {
-            // send pulse
-            pins.setPull(trig, PinPullMode.PullNone)
-            pins.digitalWritePin(trig, 0)
-            control.waitMicros(2)
-            pins.digitalWritePin(trig, 1)
-            control.waitMicros(10)
-            pins.digitalWritePin(trig, 0)
-
-            // read pulse
-            d += pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58)
+        let raw = 0
+        for(let i = 0; i < 10; i++) {
+            raw += pins.analogReadPin(AnalogPin.P2)
         }
 
-        return Math.idiv(d, (58 * repeat))
-    } */
+        return Math.abs(raw / 12)  // get the average value and compensate to nearest mm
+    }
 
 
 
@@ -180,7 +163,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=99
     export function MoveForward(speed: number): void {
-        speed = Math.clamp(0, 100, speed)
+        speed = Math.clamp(0, 100, speed);
         speed = 512 - speed * 512 / 100
         
         pins.analogWritePin(AnalogPin.P8, speed)
@@ -202,7 +185,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=98
     export function MoveBackward(speed: number): void {
-        speed = Math.clamp(0, 100, speed)
+        speed = Math.clamp(0, 100, speed);
         speed = 511 + speed * 512 / 100
         
         pins.analogWritePin(AnalogPin.P8, speed)
@@ -224,7 +207,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=97
     export function TurnLeft(speed: number): void {
-        speed = Math.clamp(0, 100, speed)
+        speed = Math.clamp(0, 100, speed);
         let nLeftSpeed = 511 + speed * 512 / 100
         let nRightSpeed = 512 - speed * 512 / 100
 
@@ -247,7 +230,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=96
     export function TurnRight(speed: number): void {
-        speed = Math.clamp(0, 100, speed)
+        speed = Math.clamp(0, 100, speed);
         let nLeftSpeed = 512 - speed * 512 / 100
         let nRightSpeed = 511 + speed * 512 / 100
 
@@ -285,7 +268,7 @@ namespace reromicro {
     //% weight=90
     export function RunMotor(motor: Motors, speed: number): void {
         speed = (100 - speed) * 1023 / 200
-        speed = Math.clamp(0, 1023, speed)
+        speed = Math.clamp(0, 1023, speed);
         if (motor == Motors.Left) {
             pins.analogWritePin(AnalogPin.P8, speed)
             pins.analogSetPeriod(AnalogPin.P8, 50)
@@ -311,7 +294,6 @@ namespace reromicro {
     //==============================================
     //  Neopixel RGB LEDs (WS2812B)
     //==============================================
-
     let RgbLeds: neopixel.Strip;
 
     /**
@@ -359,7 +341,6 @@ namespace reromicro {
 
         return RgbLeds
     }
-
 
 
 
