@@ -121,10 +121,10 @@ namespace reromicro {
     //==============================================
 
     /**
-     * Read distance (cm) using ultrasonic sensor.
+     * Read distance (mm) using ultrasonic sensor.
      */
     //% subcategory=Sensors
-    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
+    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(mm)"
     //% blockGap=10
     //% weight=70
     export function ReadUltrasonic(): number {
@@ -134,7 +134,7 @@ namespace reromicro {
             raw += pins.analogReadPin(AnalogPin.P2)
         }
 
-        return Math.abs(raw / 100)
+        return Math.abs(raw / 12)  // get the average value and compensate to nearest mm
     }
 
 
@@ -144,7 +144,7 @@ namespace reromicro {
     //==============================================
     //  Motors
     //==============================================
-
+    
     export enum Motors {
         //% block="Left Motor"
         Left = 0,
@@ -167,11 +167,10 @@ namespace reromicro {
     //% weight=99
     export function MoveForward(speed: number): void {
         speed = Math.clamp(0, 100, speed);
-        let nLeftSpeed = 512 - speed * 512 / 100
-        let nRightSpeed = 511 + speed * 512 / 100
-
-        pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
-        pins.analogWritePin(AnalogPin.P16, nRightSpeed)
+        speed = 512 - speed * 512 / 100
+        
+        pins.analogWritePin(AnalogPin.P8, speed)
+        pins.analogWritePin(AnalogPin.P16, speed)
         pins.analogSetPeriod(AnalogPin.P8, 50)
         pins.analogSetPeriod(AnalogPin.P16, 50)
         pins.digitalWritePin(DigitalPin.P12, 1)
@@ -190,11 +189,10 @@ namespace reromicro {
     //% weight=98
     export function MoveBackward(speed: number): void {
         speed = Math.clamp(0, 100, speed);
-        let nLeftSpeed = 511 + speed * 512 / 100
-        let nRightSpeed = 512 - speed * 512 / 100
-
-        pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
-        pins.analogWritePin(AnalogPin.P16, nRightSpeed)
+        speed = 511 + speed * 512 / 100
+        
+        pins.analogWritePin(AnalogPin.P8, speed)
+        pins.analogWritePin(AnalogPin.P16, speed)
         pins.analogSetPeriod(AnalogPin.P8, 50)
         pins.analogSetPeriod(AnalogPin.P16, 50)
         pins.digitalWritePin(DigitalPin.P12, 1)
@@ -214,7 +212,7 @@ namespace reromicro {
     export function TurnLeft(speed: number): void {
         speed = Math.clamp(0, 100, speed);
         let nLeftSpeed = 511 + speed * 512 / 100
-        let nRightSpeed = 511 + speed * 512 / 100
+        let nRightSpeed = 512 - speed * 512 / 100
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
@@ -237,7 +235,7 @@ namespace reromicro {
     export function TurnRight(speed: number): void {
         speed = Math.clamp(0, 100, speed);
         let nLeftSpeed = 512 - speed * 512 / 100
-        let nRightSpeed = 512 - speed * 512 / 100
+        let nRightSpeed = 511 + speed * 512 / 100
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
@@ -255,8 +253,8 @@ namespace reromicro {
     //% weight=95
     export function Brake(): void {
         pins.digitalWritePin(DigitalPin.P12, 0)
-        pins.analogWritePin(AnalogPin.P8, 511)
-        pins.analogWritePin(AnalogPin.P16, 511)
+        pins.analogWritePin(AnalogPin.P8, 512)
+        pins.analogWritePin(AnalogPin.P16, 512)
     }
 
     /**
@@ -272,30 +270,21 @@ namespace reromicro {
     //% blockGap=10
     //% weight=90
     export function RunMotor(motor: Motors, speed: number): void {
+        speed = (100 - speed) * 1023 / 200
+        speed = Math.clamp(0, 1023, speed);
         if (motor == Motors.Left) {
-            let nLeftSpeed = (100 - speed) * 1023 / 200
-            nLeftSpeed = Math.clamp(0, 1023, nLeftSpeed);
-
-            pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
+            pins.analogWritePin(AnalogPin.P8, speed)
             pins.analogSetPeriod(AnalogPin.P8, 50)
             pins.digitalWritePin(DigitalPin.P12, 1)
         }
         else if (motor == Motors.Right) {
-            let nRightSpeed = (100 + speed) * 1023 / 200
-            nRightSpeed = Math.clamp(0, 1023, nRightSpeed);
-
-            pins.analogWritePin(AnalogPin.P16, nRightSpeed)
+            pins.analogWritePin(AnalogPin.P16, speed)
             pins.analogSetPeriod(AnalogPin.P16, 50)
             pins.digitalWritePin(DigitalPin.P12, 1)
         }
         else {
-            let nLeftSpeed = (100 - speed) * 1023 / 200
-            nLeftSpeed = Math.clamp(0, 1023, nLeftSpeed);
-            let nRightSpeed = (100 + speed) * 1023 / 200
-            nRightSpeed = Math.clamp(0, 1023, nRightSpeed);
-
-            pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
-            pins.analogWritePin(AnalogPin.P16, nRightSpeed)
+            pins.analogWritePin(AnalogPin.P8, speed)
+            pins.analogWritePin(AnalogPin.P16, speed)
             pins.analogSetPeriod(AnalogPin.P8, 50)
             pins.analogSetPeriod(AnalogPin.P16, 50)
             pins.digitalWritePin(DigitalPin.P12, 1)
@@ -313,7 +302,7 @@ namespace reromicro {
 
     /**
      * Initialize Neopixel RGB LEDs on rero:micro.
-     * Set brightness to 150 (range: 0-255).
+     * Set brightness to 50 (range: 0-255).
      */
     //% subcategory=LEDs
     //% blockId=rero-micro-init-rgb-leds
@@ -324,7 +313,7 @@ namespace reromicro {
 
         if (!RgbLeds) {
             RgbLeds = neopixel.create(DigitalPin.P0, 6, NeoPixelMode.RGB)
-            RgbLeds.setBrightness(150)
+            RgbLeds.setBrightness(50)
         }
     }
 
