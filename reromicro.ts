@@ -43,12 +43,12 @@ namespace reromicro {
     export function DetectLineExistence(sensor: LineSensors): boolean {
 
         nTimer = 1000
-        let pinSensor = rightLineSensor;
+        let pinSensor = rightLineSensor
         if (sensor == LineSensors.Left) {
-            pinSensor = leftLineSensor;
+            pinSensor = leftLineSensor
         }
         else if (sensor == LineSensors.Center) {
-            pinSensor = centerLineSensor;
+            pinSensor = centerLineSensor
         }
 
         // Read sensor
@@ -86,12 +86,12 @@ namespace reromicro {
     export function ReadLineIrIntensity(sensor: LineSensors): number {
 
         nTimer = 1000
-        let pinSensor = rightLineSensor;
+        let pinSensor = rightLineSensor
         if (sensor == LineSensors.Left) {
-            pinSensor = leftLineSensor;
+            pinSensor = leftLineSensor
         }
         else if (sensor == LineSensors.Center) {
-            pinSensor = centerLineSensor;
+            pinSensor = centerLineSensor
         }
 
         // Read sensor
@@ -129,26 +129,26 @@ namespace reromicro {
     //% weight=70
     export function ReadUltrasonic(): number {
 
-        let trig = pins.digitalPin.P2;
-        let echo = pins.digitalPin.P2;
-        let maxCmDistance = 300;
+        let trig = pins.digitalPin.P2
+        let echo = pins.digitalPin.P2
+        let maxCmDistance = 300
 
-        const d = 0;
-        let repeat = 3;
+        let d = 0
+        let repeat = 3
         for(let i = 0; i < repeat; i++) {
             // send pulse
-            pins.setPull(trig, PinPullMode.PullNone);
-            pins.digitalWritePin(trig, 0);
-            control.waitMicros(2);
-            pins.digitalWritePin(trig, 1);
-            control.waitMicros(10);
-            pins.digitalWritePin(trig, 0);
+            pins.setPull(trig, PinPullMode.PullNone)
+            pins.digitalWritePin(trig, 0)
+            control.waitMicros(2)
+            pins.digitalWritePin(trig, 1)
+            control.waitMicros(10)
+            pins.digitalWritePin(trig, 0)
 
             // read pulse
-            d += pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
+            d += pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58)
         }
 
-        return Math.idiv(d, (58 * repeat));
+        return Math.idiv(d, (58 * repeat))
     }
 
 
@@ -180,7 +180,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=99
     export function MoveForward(speed: number): void {
-        speed = Math.clamp(0, 100, speed);
+        speed = Math.clamp(0, 100, speed)
         speed = 512 - speed * 512 / 100
         
         pins.analogWritePin(AnalogPin.P8, speed)
@@ -202,7 +202,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=98
     export function MoveBackward(speed: number): void {
-        speed = Math.clamp(0, 100, speed);
+        speed = Math.clamp(0, 100, speed)
         speed = 511 + speed * 512 / 100
         
         pins.analogWritePin(AnalogPin.P8, speed)
@@ -224,7 +224,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=97
     export function TurnLeft(speed: number): void {
-        speed = Math.clamp(0, 100, speed);
+        speed = Math.clamp(0, 100, speed)
         let nLeftSpeed = 511 + speed * 512 / 100
         let nRightSpeed = 512 - speed * 512 / 100
 
@@ -247,7 +247,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=96
     export function TurnRight(speed: number): void {
-        speed = Math.clamp(0, 100, speed);
+        speed = Math.clamp(0, 100, speed)
         let nLeftSpeed = 512 - speed * 512 / 100
         let nRightSpeed = 511 + speed * 512 / 100
 
@@ -285,7 +285,7 @@ namespace reromicro {
     //% weight=90
     export function RunMotor(motor: Motors, speed: number): void {
         speed = (100 - speed) * 1023 / 200
-        speed = Math.clamp(0, 1023, speed);
+        speed = Math.clamp(0, 1023, speed)
         if (motor == Motors.Left) {
             pins.analogWritePin(AnalogPin.P8, speed)
             pins.analogSetPeriod(AnalogPin.P8, 50)
