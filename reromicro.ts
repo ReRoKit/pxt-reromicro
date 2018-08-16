@@ -148,7 +148,7 @@ namespace reromicro {
             d += pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
         }
 
-        return Math.idiv(d, (58 * repeat);
+        return Math.idiv(d, (58 * repeat));
     }
 
 
