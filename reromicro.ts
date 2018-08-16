@@ -127,7 +127,7 @@ namespace reromicro {
     //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
     //% blockGap=10
     //% weight=70
-    export function ReadUltrasonic(): number {
+    /* export function ReadUltrasonic(): number {
 
         let trig = pins.digitalPin.P2
         let echo = pins.digitalPin.P2
@@ -149,7 +149,7 @@ namespace reromicro {
         }
 
         return Math.idiv(d, (58 * repeat))
-    }
+    } */
 
 
 
