@@ -15,7 +15,7 @@ namespace reromicro {
     let nTimer = 1000
     let nMaxTimer = 1000
     let nStartTime = 0
-    let bPinState = 1;
+    let bPinState = 1
     let nLineThreshold = 500
 
     export enum LineSensors {
@@ -41,12 +41,12 @@ namespace reromicro {
     export function DetectLineExistence(sensor: LineSensors): boolean {
 
         nTimer = 1000
-        let pinSensor = rightLineSensor;
+        let pinSensor = rightLineSensor
         if (sensor == LineSensors.Left) {
-            pinSensor = leftLineSensor;
+            pinSensor = leftLineSensor
         }
         else if (sensor == LineSensors.Center) {
-            pinSensor = centerLineSensor;
+            pinSensor = centerLineSensor
         }
 
         // Read sensor
@@ -84,12 +84,12 @@ namespace reromicro {
     export function ReadLineIrIntensity(sensor: LineSensors): number {
 
         nTimer = 1000
-        let pinSensor = rightLineSensor;
+        let pinSensor = rightLineSensor
         if (sensor == LineSensors.Left) {
-            pinSensor = leftLineSensor;
+            pinSensor = leftLineSensor
         }
         else if (sensor == LineSensors.Center) {
-            pinSensor = centerLineSensor;
+            pinSensor = centerLineSensor
         }
 
         // Read sensor
@@ -117,21 +117,20 @@ namespace reromicro {
     //==============================================
     //  Ultrasonic Sensor (Analog output)
     //==============================================
+    let triggerUltrasonic = DigitalPin.P2
+    let echoUltrasonic = DigitalPin.P2
+    
     /**
-     * Read distance (mm) using ultrasonic sensor.
+     * Read distance (cm) using ultrasonic sensor.
      */
     //% subcategory=Sensors
-    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(mm)"
+    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
     //% blockGap=10
     //% weight=70
     export function ReadUltrasonic(): number {
 
-        let raw = 0
-        for(let i = 0; i < 10; i++) {
-            raw += pins.analogReadPin(AnalogPin.P2)
-        }
-
-        return Math.abs(raw / 12)  // get the average value and compensate to nearest mm
+        
+        return 1234
     }
 
 
@@ -163,7 +162,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=99
     export function MoveForward(speed: number): void {
-        speed = Math.clamp(0, 100, speed);
+        speed = Math.clamp(0, 100, speed)
         speed = 512 - speed * 512 / 100
         
         pins.analogWritePin(AnalogPin.P8, speed)
@@ -185,7 +184,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=98
     export function MoveBackward(speed: number): void {
-        speed = Math.clamp(0, 100, speed);
+        speed = Math.clamp(0, 100, speed)
         speed = 511 + speed * 512 / 100
         
         pins.analogWritePin(AnalogPin.P8, speed)
@@ -207,7 +206,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=97
     export function TurnLeft(speed: number): void {
-        speed = Math.clamp(0, 100, speed);
+        speed = Math.clamp(0, 100, speed)
         let nLeftSpeed = 511 + speed * 512 / 100
         let nRightSpeed = 512 - speed * 512 / 100
 
@@ -230,7 +229,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=96
     export function TurnRight(speed: number): void {
-        speed = Math.clamp(0, 100, speed);
+        speed = Math.clamp(0, 100, speed)
         let nLeftSpeed = 512 - speed * 512 / 100
         let nRightSpeed = 511 + speed * 512 / 100
 
@@ -268,7 +267,7 @@ namespace reromicro {
     //% weight=90
     export function RunMotor(motor: Motors, speed: number): void {
         speed = (100 - speed) * 1023 / 200
-        speed = Math.clamp(0, 1023, speed);
+        speed = Math.clamp(0, 1023, speed)
         if (motor == Motors.Left) {
             pins.analogWritePin(AnalogPin.P8, speed)
             pins.analogSetPeriod(AnalogPin.P8, 50)
@@ -294,7 +293,7 @@ namespace reromicro {
     //==============================================
     //  Neopixel RGB LEDs (WS2812B)
     //==============================================
-    let RgbLeds: neopixel.Strip;
+    let RgbLeds: neopixel.Strip
 
     /**
      * Initialize Neopixel RGB LEDs on rero:micro.
