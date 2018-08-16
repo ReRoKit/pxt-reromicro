@@ -117,24 +117,38 @@ namespace reromicro {
 
 
     //==============================================
-    //  Ultrasonic Sensor (Analog output)
+    //  Ultrasonic Sensor (HC-SR04)
     //==============================================
 
     /**
-     * Read distance (mm) using ultrasonic sensor.
+     * Read distance in centimeters (cm) with ultrasonic sensor.
      */
     //% subcategory=Sensors
-    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(mm)"
+    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
     //% blockGap=10
     //% weight=70
     export function ReadUltrasonic(): number {
 
-        let raw = 0
-        for(let i = 0; i < 10; i++) {
-            raw += pins.analogReadPin(AnalogPin.P2)
+        let trig = pins.digitalPin.P2;
+        let echo = pins.digitalPin.P2;
+        let maxCmDistance = 300;
+
+        const d = 0;
+        let repeat = 3;
+        for(let i = 0; i < repeat; i++) {
+            // send pulse
+            pins.setPull(trig, PinPullMode.PullNone);
+            pins.digitalWritePin(trig, 0);
+            control.waitMicros(2);
+            pins.digitalWritePin(trig, 1);
+            control.waitMicros(10);
+            pins.digitalWritePin(trig, 0);
+
+            // read pulse
+            d += pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
         }
 
-        return Math.abs(raw / 12)  // get the average value and compensate to nearest mm
+        return Math.idiv(d, (58 * repeat);
     }
 
 
