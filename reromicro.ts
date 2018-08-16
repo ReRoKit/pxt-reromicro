@@ -17,7 +17,7 @@ namespace reromicro {
     let nTimer = 1000
     let nMaxTimer = 1000
     let nStartTime = 0
-    let bPinState = 1;
+    let bPinState = 1
     let nLineThreshold = 500
 
     export enum LineSensors {
