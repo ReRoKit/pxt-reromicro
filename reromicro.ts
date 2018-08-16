@@ -123,11 +123,11 @@ namespace reromicro {
     /**
      * Read distance in centimeters (cm) with ultrasonic sensor.
      */
-    //% subcategory=Sensors
+    /* //% subcategory=Sensors
     //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
     //% blockGap=10
     //% weight=70
-    /* export function ReadUltrasonic(): number {
+    export function ReadUltrasonic(): number {
 
         let trig = pins.digitalPin.P2
         let echo = pins.digitalPin.P2
