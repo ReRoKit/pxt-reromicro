@@ -119,7 +119,7 @@ namespace reromicro {
     //==============================================
     let trig = DigitalPin.P2
     let echo = DigitalPin.P2
-    let maxCmDistance = 500
+    let maxCmDistance = 200
 
     /**
      * Read distance in centimeters (cm) with ultrasonic sensor.
@@ -141,7 +141,7 @@ namespace reromicro {
         // read pulse
         const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
 
-        return Math.idiv(d, 58)
+        return Math.idiv(d, 38) // tuned for microbit to get the right value in cm
     }
 
 
