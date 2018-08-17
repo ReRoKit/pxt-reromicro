@@ -139,7 +139,7 @@ namespace reromicro {
         pins.digitalWritePin(trig, 0);
 
         // read pulse
-        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
+        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 38);
 
         return Math.idiv(d, 38) // tuned for microbit to get the right value in cm
     }
