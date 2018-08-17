@@ -119,7 +119,7 @@ namespace reromicro {
     //==============================================
     let trig = DigitalPin.P2
     let echo = DigitalPin.P2
-    let maxCmDistance = 200
+    let maxCmDistance = 300
 
     /**
      * Read distance in centimeters (cm) with ultrasonic sensor.
