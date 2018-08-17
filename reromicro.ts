@@ -10,6 +10,12 @@ namespace reromicro {
     let rightLineSensor = DigitalPin.P13
     let centerLineSensor = DigitalPin.P14
     let leftLineSensor = DigitalPin.P15
+    let lineSensorPins = [leftLineSensor, centerLineSensor, rightLineSensor]
+
+    const lineSensorValues = [0,0,0]    // [left, center, right]
+    // const rightSensorValue
+    // const centerSensorValue
+    // const leftSensorValue
 
     let bFlag = true
     let nTimer = 1000
@@ -24,6 +30,73 @@ namespace reromicro {
         Right = 2
     }
 
+
+    /**
+     * Read line sensors.
+     * ???
+     */
+    //% subcategory=Sensors
+    //% blockId=rero-micro-line-readsensors
+    //% block="read line sensors"
+    //% blockGap=10
+    //% weight=85
+    export function ReadLineSensors(): void {
+        
+        // Read sensors
+        for(let i=0; i<3; i++) {
+            nTimer = 1000
+            bFlag = true
+            nStartTime = input.runningTimeMicros()
+            pins.digitalWritePin(lineSensorPins[i], 1)
+            control.waitMicros(10)
+            pins.setPull(lineSensorPins[i], PinPullMode.PullNone)
+            while (bFlag == true && (input.runningTimeMicros() - nStartTime) < nMaxTimer) {
+                bPinState = pins.digitalReadPin(lineSensorPins[i])
+                if (bPinState == 0) {
+                    nTimer = input.runningTimeMicros() - nStartTime
+                    bFlag = false
+                }
+            }
+            lineSensorValues[i] = nTimer
+        }
+    }
+
+    /**
+     * /!\ Use "read line sensors" function first before this.
+     * This function returns a single sensor's reflected infrared intensity value.
+     * @param sensor position, eg: LineSensors.Center
+     */
+    //% subcategory=Sensors
+    //% blockId=rero-micro-line-getirintensity
+    //% block="get|%sensor|line sensor IR intensity"
+    //% blockGap=10
+    //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
+    //% sensor.fieldOptions.width="200"
+    //% weight=84
+    export function GetLineIrIntensity(sensor: LineSensors): number {
+
+            return lineSensorValues[sensor]
+    }
+
+    /**
+     * /!\ Use "read line sensors" function first before this.
+     * This function returns true if the sensor detects line.
+     * @param sensor position, eg: 1
+     */
+    //% subcategory=Sensors
+    //% blockId=rero-micro-line-sensordetectsline
+    //% block="|%sensor|sensor detects line"
+    //% blockGap=10
+    //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
+    //% sensor.fieldOptions.width="200"
+    //% weight=84
+    export function LineSensorDetectsLine(sensor: LineSensors): boolean {
+
+        return ((lineSensorValues[sensor] > 350) ? true : false)
+    }
+
+
+    //------------------------------------------------------
 
     /**
      * This function reads a single micro:Racer's Line Sensor.
