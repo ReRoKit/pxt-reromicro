@@ -86,7 +86,7 @@ namespace reromicro {
     //% subcategory=Sensors
     //% blockId=rero-micro-line-irintensity
     //% block="|%sensor|line sensor IR intensity"
-    //% blockGap=15
+    //% blockGap=20
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
     //% sensor.fieldOptions.width="200"
     //% weight=83
@@ -241,7 +241,7 @@ namespace reromicro {
      */
     //% subcategory=Motors
     //% blockId=rero-micro-brake block="brake"
-    //% blockGap=15
+    //% blockGap=20
     //% weight=95
     export function Brake(): void {
         pins.digitalWritePin(DigitalPin.P12, 0)
@@ -314,7 +314,7 @@ namespace reromicro {
     //% subcategory=LEDs
     //% blockId=rero-micro-rgb-leds
     //% block="rero:micro's RGB LEDs"
-    //% blockGap=15
+    //% blockGap=20
     //% weight=95
     export function reroRgbLeds(): neopixel.Strip {
 
