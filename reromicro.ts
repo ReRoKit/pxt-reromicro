@@ -84,13 +84,13 @@ namespace reromicro {
      * @param sensor position, eg: LineSensors.Center
      */
     //% subcategory=Sensors
-    //% blockId=rero-micro-line-getirintensity
-    //% block="get|%sensor|line sensor IR intensity"
-    //% blockGap=10
+    //% blockId=rero-micro-line-irintensity
+    //% block="|%sensor|line sensor IR intensity"
+    //% blockGap=15
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
     //% sensor.fieldOptions.width="200"
     //% weight=83
-    export function GetLineIrIntensity(sensor: LineSensors): number {
+    export function LineIrIntensity(sensor: LineSensors): number {
 
         return lineSensorValues[sensor]
     }
@@ -111,7 +111,7 @@ namespace reromicro {
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
-    //% blockGap=15
+    //% blockGap=10
     //% weight=70
     export function ReadUltrasonic(): number {
 
@@ -241,7 +241,7 @@ namespace reromicro {
      */
     //% subcategory=Motors
     //% blockId=rero-micro-brake block="brake"
-    //% blockGap=10
+    //% blockGap=15
     //% weight=95
     export function Brake(): void {
         pins.digitalWritePin(DigitalPin.P12, 0)
@@ -259,7 +259,7 @@ namespace reromicro {
     //% blockId=rero-micro-run-motor
     //% block="run|%motor| at|%speed|"
     //% speed.min=-100 speed.max=100
-    //% blockGap=15
+    //% blockGap=10
     //% weight=90
     export function RunMotor(motor: Motors, speed: number): void {
         speed = (100 - speed) * 1023 / 200
@@ -314,7 +314,7 @@ namespace reromicro {
     //% subcategory=LEDs
     //% blockId=rero-micro-rgb-leds
     //% block="rero:micro's RGB LEDs"
-    //% blockGap=10
+    //% blockGap=15
     //% weight=95
     export function reroRgbLeds(): neopixel.Strip {
 
