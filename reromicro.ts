@@ -62,24 +62,7 @@ namespace reromicro {
     }
 
     /**
-     * /!\ Use "read line sensors" function first before this.
-     * This function returns a single sensor's reflected infrared intensity value.
-     * @param sensor position, eg: LineSensors.Center
-     */
-    //% subcategory=Sensors
-    //% blockId=rero-micro-line-getirintensity
-    //% block="get|%sensor|line sensor IR intensity"
-    //% blockGap=10
-    //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
-    //% sensor.fieldOptions.width="200"
-    //% weight=84
-    export function GetLineIrIntensity(sensor: LineSensors): number {
-
-            return lineSensorValues[sensor]
-    }
-
-    /**
-     * /!\ Use "read line sensors" function first before this.
+     * ! Use "read line sensors" function first before this.
      * This function returns true if the sensor detects line.
      * @param sensor position, eg: 1
      */
@@ -92,98 +75,25 @@ namespace reromicro {
     //% weight=84
     export function LineSensorDetectsLine(sensor: LineSensors): boolean {
 
-        return ((lineSensorValues[sensor] > 350) ? true : false)
-    }
-
-
-    //------------------------------------------------------
-
-    /**
-     * This function reads a single micro:Racer's Line Sensor.
-     * Returns true if line is detected on the selected sensor,
-     * else returns false.
-     * @param sensor position, eg: LineSensors.Center
-     */
-    //% subcategory=Sensors
-    //% blockId=rero-micro-line-detect-line-existence 
-    //% block="line detected at|%sensor|sensor"
-    //% blockGap=10
-    //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
-    //% sensor.fieldOptions.width="200"
-    //% weight=82
-    export function DetectLineExistence(sensor: LineSensors): boolean {
-
-        nTimer = 1000
-        let pinSensor = rightLineSensor
-        if (sensor == LineSensors.Left) {
-            pinSensor = leftLineSensor
-        }
-        else if (sensor == LineSensors.Center) {
-            pinSensor = centerLineSensor
-        }
-
-        // Read sensor
-        bFlag = true
-        nStartTime = input.runningTimeMicros()
-        pins.digitalWritePin(pinSensor, 1)
-        control.waitMicros(10)
-        pins.setPull(pinSensor, PinPullMode.PullNone)
-        while (bFlag == true && (input.runningTimeMicros() - nStartTime) < nMaxTimer) {
-            bPinState = pins.digitalReadPin(pinSensor)
-            if (bPinState == 0) {
-                nTimer = input.runningTimeMicros() - nStartTime
-                bFlag = false
-            }
-        }
-
-        if (nTimer > nLineThreshold) {
-            return true
-        }
-        return false
+        return ((lineSensorValues[sensor] > 400) ? true : false)
     }
 
     /**
-     * This function reads a single micro:Racer's Line Sensor.
-     * Returns the reflected infrared intensity value.
+     * ! Use "read line sensors" function first before this.
+     * This function returns a single sensor's reflected infrared intensity value.
      * @param sensor position, eg: LineSensors.Center
      */
     //% subcategory=Sensors
-    //% blockId=rero-micro-line-read-ir-intensity
-    //% block="read|%sensor|sensor"
+    //% blockId=rero-micro-line-getirintensity
+    //% block="get|%sensor|line sensor IR intensity"
     //% blockGap=10
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
     //% sensor.fieldOptions.width="200"
-    //% weight=80
-    export function ReadLineIrIntensity(sensor: LineSensors): number {
+    //% weight=83
+    export function GetLineIrIntensity(sensor: LineSensors): number {
 
-        nTimer = 1000
-        let pinSensor = rightLineSensor
-        if (sensor == LineSensors.Left) {
-            pinSensor = leftLineSensor
-        }
-        else if (sensor == LineSensors.Center) {
-            pinSensor = centerLineSensor
-        }
-
-        // Read sensor
-        bFlag = true
-        nStartTime = input.runningTimeMicros()
-        pins.digitalWritePin(pinSensor, 1)
-        control.waitMicros(10)
-        pins.setPull(pinSensor, PinPullMode.PullNone)
-        while (bFlag == true && (input.runningTimeMicros() - nStartTime) < nMaxTimer) {
-            bPinState = pins.digitalReadPin(pinSensor)
-            if (bPinState == 0) {
-                nTimer = input.runningTimeMicros() - nStartTime
-                bFlag = false
-            }
-        }
-
-        return nTimer
+        return lineSensorValues[sensor]
     }
-
-
-
 
 
 
@@ -201,7 +111,7 @@ namespace reromicro {
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
-    //% blockGap=10
+    //% blockGap=15
     //% weight=70
     export function ReadUltrasonic(): number {
 
@@ -341,7 +251,7 @@ namespace reromicro {
 
     /**
      * Run Motor(s) at selected speed.
-     * Speed = -100 (reverse) to 100 (forward)
+     * Speed = -100 (reverse) to 100 (forward), 0 to brake.
      * @param motor selected motor, eg: Motors.Left
      * @param speed selected speed, eg: 50
      */
@@ -349,7 +259,7 @@ namespace reromicro {
     //% blockId=rero-micro-run-motor
     //% block="run|%motor| at|%speed|"
     //% speed.min=-100 speed.max=100
-    //% blockGap=10
+    //% blockGap=15
     //% weight=90
     export function RunMotor(motor: Motors, speed: number): void {
         speed = (100 - speed) * 1023 / 200
@@ -398,6 +308,18 @@ namespace reromicro {
         }
     }
 
+    /**
+     * Expose Initialized RGB LEDs Object
+     */
+    //% subcategory=LEDs
+    //% blockId=rero-micro-rgb-leds
+    //% block="rero:micro's RGB LEDs"
+    //% blockGap=10
+    //% weight=95
+    export function reroRgbLeds(): neopixel.Strip {
+
+        return RgbLeds
+    }
 
     /**
      * Show Rainbow Colors
@@ -406,7 +328,7 @@ namespace reromicro {
     //% blockId=rero-micro-show-rainbow
     //% block="show rainbow"
     //% blockGap=10
-    //% weight=90
+    //% weight=80
     export function ShowRainbow(): void {
 
         RgbLeds.showRainbow(15, 300)
@@ -414,19 +336,5 @@ namespace reromicro {
     }
 
 
-    /**
-     * Expose Initialized RGB LEDs Object
-     */
-    //% subcategory=LEDs
-    //% blockId=rero-micro-rgb-leds
-    //% block="rero:micro's RGB LEDs"
-    //% blockGap=10
-    //% weight=80
-    export function reroRgbLeds(): neopixel.Strip {
-
-        return RgbLeds
-    }
-
-
-
+    
 }
