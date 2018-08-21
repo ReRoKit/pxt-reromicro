@@ -75,7 +75,7 @@ namespace reromicro {
     //% weight=84
     export function LineSensorDetectsLine(sensor: LineSensors): boolean {
 
-        return ((lineSensorValues[sensor] > 400) ? true : false)
+        return ((lineSensorValues[sensor] > 450) ? true : false)
     }
 
     /**
