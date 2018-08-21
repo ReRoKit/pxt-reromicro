@@ -5,6 +5,40 @@
 namespace reromicro {
 
     //==============================================
+    //  Ultrasonic Sensor (HC-SR04)
+    //==============================================
+    let trig = DigitalPin.P2
+    let echo = DigitalPin.P2
+    let maxCmDistance = 255
+
+    /**
+     * Read distance in centimeters (cm) with ultrasonic sensor.
+     * Distance = 3cm - 255cm.
+     * Note: It returns '0' if distance >255cm or no echo is detected.
+     */
+    //% subcategory=Sensors
+    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
+    //% blockGap=30
+    //% weight=90
+    export function ReadUltrasonic(): number {
+
+        // send pulse
+        pins.setPull(trig, PinPullMode.PullNone);
+        pins.digitalWritePin(trig, 0);
+        control.waitMicros(2);
+        pins.digitalWritePin(trig, 1);
+        control.waitMicros(10);
+        pins.digitalWritePin(trig, 0);
+
+        // read pulse
+        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 38);
+
+        return Math.idiv(d, 38) // tuned for microbit to get the right value in cm
+    }
+
+
+
+    //==============================================
     //  Line Sensors
     //==============================================
     let rightLineSensor = DigitalPin.P13
@@ -12,10 +46,9 @@ namespace reromicro {
     let leftLineSensor = DigitalPin.P15
     let lineSensorPins = [leftLineSensor, centerLineSensor, rightLineSensor]
 
-    const lineSensorValues = [0,0,0]    // [left, center, right]
-    // const rightSensorValue
-    // const centerSensorValue
-    // const leftSensorValue
+    // [left, center, right]
+    const lineSensorValues = [0,0,0]
+    const lineSensorThreshold = [450,450,450]
 
     let bFlag = true
     let nTimer = 1000
@@ -33,7 +66,8 @@ namespace reromicro {
 
     /**
      * Read line sensors.
-     * ???
+     * This function reads all three IR pairs (line sensors) and stores the values in variables.
+     * Retrieve these values using "X sensor detects line" and/or "X line sensor IR intensity" blocks.
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-readsensors
@@ -75,7 +109,7 @@ namespace reromicro {
     //% weight=84
     export function LineSensorDetectsLine(sensor: LineSensors): boolean {
 
-        return ((lineSensorValues[sensor] > 450) ? true : false)
+        return ((lineSensorValues[sensor] > lineSensorThreshold[sensor]) ? true : false)
     }
 
     /**
@@ -95,44 +129,31 @@ namespace reromicro {
         return lineSensorValues[sensor]
     }
 
-
-
-    //==============================================
-    //  Ultrasonic Sensor (HC-SR04)
-    //==============================================
-    let trig = DigitalPin.P2
-    let echo = DigitalPin.P2
-    let maxCmDistance = 255
-
     /**
-     * Read distance in centimeters (cm) with ultrasonic sensor.
-     * Distance = 3cm - 255cm.
-     * Note: It returns '0' if distance >255cm or no echo is detected.
+     * Only use this function once in "on start" if your robot doesn't detect the line properly.
+     * This function sets the threshold value for each IR pair to determine white and black surfaces.
+     * @param leftThreshold, eg: 450
+     * @param centerThreshold, eg: 450
+     * @param rightThreshold, eg: 450
      */
     //% subcategory=Sensors
-    //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
-    //% blockGap=10
-    //% weight=70
-    export function ReadUltrasonic(): number {
+    //% blockId=rero-micro-line-adjustthresholds
+    //% block="calibrate line sensors: left|%leftThreshold| center|%centerThreshold| right|%rightThreshold|"
+    //% leftThreshold.min=300 leftThreshold.max=600
+    //% centerThreshold.min=300 centerThreshold.max=600
+    //% rightThreshold.min=300 rightThreshold.max=600
+    //% blockGap=20
+    //% weight=80
+    export function LineAdjustThresholds(leftThreshold: number, centerThreshold: number, rightThreshold: number): void {
 
-        // send pulse
-        pins.setPull(trig, PinPullMode.PullNone);
-        pins.digitalWritePin(trig, 0);
-        control.waitMicros(2);
-        pins.digitalWritePin(trig, 1);
-        control.waitMicros(10);
-        pins.digitalWritePin(trig, 0);
-
-        // read pulse
-        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 38);
-
-        return Math.idiv(d, 38) // tuned for microbit to get the right value in cm
+        lineSensorThreshold[0] = leftThreshold
+        lineSensorThreshold[1] = centerThreshold
+        lineSensorThreshold[2] = rightThreshold
     }
 
 
 
-
-
+    
     //==============================================
     //  Motors
     //==============================================
