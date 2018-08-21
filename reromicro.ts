@@ -135,14 +135,14 @@ namespace reromicro {
      * Only use this function once in "on start" if your robot doesn't detect the line properly.
      * This function sets the threshold value for each IR pair to determine white and black surfaces.
      * 
-     * @param leftThreshold threshold for left IR pair, eg: 400
+     * @param leftThreshold threshold for left IR pair, eg: 450
      * @param centerThreshold threshold for center IR pair, eg: 450
      * @param rightThreshold threshold for right IR pair, eg: 450
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-adjustthresholds
     //% block="calibrate line sensors: left|%leftThreshold| center|%centerThreshold| right|%rightThreshold|"
-    //% leftThreshold.min=300 leftThreshold.max=600 leftThreshold.value=450
+    //% leftThreshold.min=300 leftThreshold.max=600
     //% centerThreshold.min=300 centerThreshold.max=600
     //% rightThreshold.min=300 rightThreshold.max=600
     //% blockGap=20
