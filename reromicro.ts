@@ -312,58 +312,5 @@ namespace reromicro {
         }
     }
 
-
-
-
-    //==============================================
-    //  Neopixel RGB LEDs (WS2812B)
-    //==============================================
-    let RgbLeds: neopixel.Strip
-
-    /**
-     * Initialize Neopixel RGB LEDs on rero:micro.
-     * Set brightness to 50 (range: 0-255).
-     */
-    //% subcategory=LEDs
-    //% blockId=rero-micro-init-rgb-leds
-    //% block="initialize RGB LEDs"
-    //% blockGap=10
-    //% weight=99
-    export function InitRgbLeds(): void {
-
-        if (!RgbLeds) {
-            RgbLeds = neopixel.create(DigitalPin.P0, 6, NeoPixelMode.RGB)
-            RgbLeds.setBrightness(50)
-        }
-    }
-
-    /**
-     * Expose Initialized RGB LEDs Object
-     */
-    //% subcategory=LEDs
-    //% blockId=rero-micro-rgb-leds
-    //% block="rero:micro's RGB LEDs"
-    //% blockGap=20
-    //% weight=95
-    export function reroRgbLeds(): neopixel.Strip {
-
-        return RgbLeds
-    }
-
-    /**
-     * Show Rainbow Colors
-     */
-    //% subcategory=LEDs
-    //% blockId=rero-micro-show-rainbow
-    //% block="show rainbow"
-    //% blockGap=10
-    //% weight=80
-    export function ShowRainbow(): void {
-
-        RgbLeds.showRainbow(15, 300)
-        RgbLeds.show()
-    }
-
-
     
 }
