@@ -1,11 +1,10 @@
 {
     "name": "reromicro",
-    "version": "0.0.26",
+    "version": "0.0.27",
     "description": "MakeCode Package for rero:micro robot",
     "license": "MIT",
     "dependencies": {
-        "core": "*",
-        "neopixel": "github:microsoft/pxt-neopixel#v0.6.7"
+        "core": "*"
     },
     "files": [
         "README.md",
