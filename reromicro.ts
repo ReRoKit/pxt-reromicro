@@ -33,6 +33,10 @@ namespace reromicro {
         // read pulse
         const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 38);
 
+        if (d == 0){
+            return 255
+        }
+
         return Math.idiv(d, 38) // tuned for microbit to get the right value in cm
     }
 
