@@ -14,7 +14,7 @@ namespace reromicro {
     /**
      * Read distance in centimeters (cm) with ultrasonic sensor.
      * Distance = 3cm - 255cm.
-     * Note: It returns '0' if distance >255cm or no echo is detected.
+     * Note: It returns '255' if distance >255cm or no echo is detected.
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-read-ultrasonic block="ultrasonic distance(cm)"
