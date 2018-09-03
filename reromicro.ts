@@ -102,7 +102,6 @@ namespace reromicro {
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns true if the sensor detects line.
-     * 
      * @param sensor position, eg: Center
      */
     //% subcategory=Sensors
@@ -120,7 +119,6 @@ namespace reromicro {
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns a single sensor's reflected infrared intensity value.
-     * 
      * @param sensor position, eg: Center
      */
     //% subcategory=Sensors
@@ -138,7 +136,6 @@ namespace reromicro {
     /**
      * Only use this function once in "on start" if your robot doesn't detect the line properly.
      * This function sets the threshold value for each IR pair to determine white and black surfaces.
-     * 
      * @param leftThreshold, eg: 450
      * @param centerThreshold, eg: 450
      * @param rightThreshold, eg: 450
@@ -182,7 +179,6 @@ namespace reromicro {
     /**
      * Move Forward.
      * Speed = 0 - 100
-     * 
      * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
@@ -205,7 +201,6 @@ namespace reromicro {
     /**
      * Move Backward.
      * Speed = 0 - 100
-     * 
      * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
@@ -228,7 +223,6 @@ namespace reromicro {
     /**
      * Turn to the Left.
      * Speed = 0 - 100
-     * 
      * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
@@ -252,7 +246,6 @@ namespace reromicro {
     /**
      * Turn to the Right.
      * Speed = 0 - 100
-     * 
      * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
@@ -289,7 +282,6 @@ namespace reromicro {
     /**
      * Run Motor(s) at selected speed.
      * Speed = -100 (reverse) to 100 (forward), 0 to brake.
-     * 
      * @param motor selected motor, eg: Motors.Left
      * @param speed selected speed, eg: 50
      */
