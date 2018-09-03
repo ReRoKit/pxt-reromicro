@@ -162,10 +162,12 @@ namespace reromicro {
     //  Motors
     //==============================================
     
-    // Initialization, especially the PWM frequency
+    // Initialization
+    // Set PWM frequency to 10kHz.
+    // Note: If set to 20kHz, PWM duty cycle may be inverted at certain condition.
     Brake()
-    pins.analogSetPeriod(AnalogPin.P8, 50)
-    pins.analogSetPeriod(AnalogPin.P16, 50)
+    pins.analogSetPeriod(AnalogPin.P8, 100)
+    pins.analogSetPeriod(AnalogPin.P16, 100)
 
     export enum Motors {
         //% block="Left Motor"
