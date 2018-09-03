@@ -161,6 +161,11 @@ namespace reromicro {
     //  Motors
     //==============================================
     
+    // Initialization, especially the PWM frequency
+    Brake()
+    pins.analogSetPeriod(AnalogPin.P8, 50)
+    pins.analogSetPeriod(AnalogPin.P16, 50)
+
     export enum Motors {
         //% block="Left Motor"
         Left = 0,
@@ -188,8 +193,8 @@ namespace reromicro {
         
         pins.analogWritePin(AnalogPin.P8, speed)
         pins.analogWritePin(AnalogPin.P16, speed)
-        pins.analogSetPeriod(AnalogPin.P8, 50)
-        pins.analogSetPeriod(AnalogPin.P16, 50)
+        // pins.analogSetPeriod(AnalogPin.P8, 50)
+        // pins.analogSetPeriod(AnalogPin.P16, 50)
         pins.digitalWritePin(DigitalPin.P12, 1)
     }
 
@@ -211,8 +216,8 @@ namespace reromicro {
         
         pins.analogWritePin(AnalogPin.P8, speed)
         pins.analogWritePin(AnalogPin.P16, speed)
-        pins.analogSetPeriod(AnalogPin.P8, 50)
-        pins.analogSetPeriod(AnalogPin.P16, 50)
+        // pins.analogSetPeriod(AnalogPin.P8, 50)
+        // pins.analogSetPeriod(AnalogPin.P16, 50)
         pins.digitalWritePin(DigitalPin.P12, 1)
     }
 
@@ -235,8 +240,8 @@ namespace reromicro {
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
-        pins.analogSetPeriod(AnalogPin.P8, 50)
-        pins.analogSetPeriod(AnalogPin.P16, 50)
+        // pins.analogSetPeriod(AnalogPin.P8, 50)
+        // pins.analogSetPeriod(AnalogPin.P16, 50)
         pins.digitalWritePin(DigitalPin.P12, 1)
     }
 
@@ -259,8 +264,8 @@ namespace reromicro {
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
-        pins.analogSetPeriod(AnalogPin.P8, 50)
-        pins.analogSetPeriod(AnalogPin.P16, 50)
+        // pins.analogSetPeriod(AnalogPin.P8, 50)
+        // pins.analogSetPeriod(AnalogPin.P16, 50)
         pins.digitalWritePin(DigitalPin.P12, 1)
     }
 
@@ -295,19 +300,19 @@ namespace reromicro {
         speed = Math.clamp(0, 1023, speed)
         if (motor == Motors.Left) {
             pins.analogWritePin(AnalogPin.P8, speed)
-            pins.analogSetPeriod(AnalogPin.P8, 50)
+            // pins.analogSetPeriod(AnalogPin.P8, 50)
             pins.digitalWritePin(DigitalPin.P12, 1)
         }
         else if (motor == Motors.Right) {
             pins.analogWritePin(AnalogPin.P16, speed)
-            pins.analogSetPeriod(AnalogPin.P16, 50)
+            // pins.analogSetPeriod(AnalogPin.P16, 50)
             pins.digitalWritePin(DigitalPin.P12, 1)
         }
         else {
             pins.analogWritePin(AnalogPin.P8, speed)
             pins.analogWritePin(AnalogPin.P16, speed)
-            pins.analogSetPeriod(AnalogPin.P8, 50)
-            pins.analogSetPeriod(AnalogPin.P16, 50)
+            // pins.analogSetPeriod(AnalogPin.P8, 50)
+            // pins.analogSetPeriod(AnalogPin.P16, 50)
             pins.digitalWritePin(DigitalPin.P12, 1)
         }
     }
