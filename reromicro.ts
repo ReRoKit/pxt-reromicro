@@ -108,7 +108,7 @@ namespace reromicro {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
     //% sensor.fieldOptions.width="200"
     //% weight=84
-    export function LineSensorDetectsLine(sensor: LineSensors): boolean {
+    export function LineSensorDetectsLine(sensor: LineSensors = 1): boolean {
 
         return ((lineSensorValues[sensor] > lineSensorThreshold[sensor]) ? true : false)
     }
@@ -126,7 +126,7 @@ namespace reromicro {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
     //% sensor.fieldOptions.width="200"
     //% weight=83
-    export function LineIrIntensity(sensor: LineSensors): number {
+    export function LineIrIntensity(sensor: LineSensors = LineSensors.Center): number {
 
         return lineSensorValues[sensor]
     }
@@ -147,7 +147,7 @@ namespace reromicro {
     //% rightThreshold.min=300 rightThreshold.max=600
     //% blockGap=20
     //% weight=80
-    export function LineAdjustThresholds(leftThreshold: number, centerThreshold: number, rightThreshold: number): void {
+    export function LineAdjustThresholds(leftThreshold: number = 450, centerThreshold: number = 450, rightThreshold: number = 450): void {
 
         lineSensorThreshold[0] = leftThreshold
         lineSensorThreshold[1] = centerThreshold
@@ -187,7 +187,7 @@ namespace reromicro {
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=99
-    export function MoveForward(speed: number): void {
+    export function MoveForward(speed: number = 50): void {
         speed = Math.clamp(0, 100, speed)
         speed = 512 - speed * 512 / 100
         
@@ -210,7 +210,7 @@ namespace reromicro {
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=98
-    export function MoveBackward(speed: number): void {
+    export function MoveBackward(speed: number = 50): void {
         speed = Math.clamp(0, 100, speed)
         speed = 511 + speed * 512 / 100
         
@@ -233,7 +233,7 @@ namespace reromicro {
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=97
-    export function TurnLeft(speed: number): void {
+    export function TurnLeft(speed: number = 50): void {
         speed = Math.clamp(0, 100, speed)
         let nLeftSpeed = 511 + speed * 512 / 100
         let nRightSpeed = 512 - speed * 512 / 100
@@ -257,7 +257,7 @@ namespace reromicro {
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=96
-    export function TurnRight(speed: number): void {
+    export function TurnRight(speed: number = 50): void {
         speed = Math.clamp(0, 100, speed)
         let nLeftSpeed = 512 - speed * 512 / 100
         let nRightSpeed = 511 + speed * 512 / 100
@@ -295,7 +295,7 @@ namespace reromicro {
     //% speed.min=-100 speed.max=100
     //% blockGap=10
     //% weight=90
-    export function RunMotor(motor: Motors, speed: number): void {
+    export function RunMotor(motor: Motors, speed: number = 50): void {
         speed = (100 - speed) * 1023 / 200
         speed = Math.clamp(0, 1023, speed)
         if (motor == Motors.Left) {
