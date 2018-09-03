@@ -99,7 +99,7 @@ namespace reromicro {
      * ! Use "read line sensors" function first before this.
      * This function returns true if the sensor detects line.
      * 
-     * @param sensor position, eg: 1
+     * @param sensor position, eg: Center
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-sensordetectsline
@@ -117,7 +117,7 @@ namespace reromicro {
      * ! Use "read line sensors" function first before this.
      * This function returns a single sensor's reflected infrared intensity value.
      * 
-     * @param sensor position, eg: LineSensors.Center
+     * @param sensor position, eg: Center
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-irintensity
@@ -126,7 +126,7 @@ namespace reromicro {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
     //% sensor.fieldOptions.width="200"
     //% weight=83
-    export function LineIrIntensity(sensor: LineSensors = LineSensors.Center): number {
+    export function LineIrIntensity(sensor: LineSensors): number {
 
         return lineSensorValues[sensor]
     }
@@ -135,9 +135,9 @@ namespace reromicro {
      * Only use this function once in "on start" if your robot doesn't detect the line properly.
      * This function sets the threshold value for each IR pair to determine white and black surfaces.
      * 
-     * @param leftThreshold threshold for left IR pair, eg: 450
-     * @param centerThreshold threshold for center IR pair, eg: 450
-     * @param rightThreshold threshold for right IR pair, eg: 450
+     * @param leftThreshold, eg: 450
+     * @param centerThreshold, eg: 450
+     * @param rightThreshold, eg: 450
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-adjustthresholds
@@ -179,7 +179,7 @@ namespace reromicro {
      * Move Forward.
      * Speed = 0 - 100
      * 
-     * @param speed to move forward, eg: 50
+     * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
     //% blockId=rero-micro-move-forward 
@@ -202,7 +202,7 @@ namespace reromicro {
      * Move Backward.
      * Speed = 0 - 100
      * 
-     * @param speed to move backward, eg: 50
+     * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
     //% blockId=rero-micro-move-backward 
@@ -225,7 +225,7 @@ namespace reromicro {
      * Turn to the Left.
      * Speed = 0 - 100
      * 
-     * @param speed to turn to the left, eg: 50
+     * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
     //% blockId=rero-micro-turn-left 
@@ -249,7 +249,7 @@ namespace reromicro {
      * Turn to the Right.
      * Speed = 0 - 100
      * 
-     * @param speed to turn to the right, eg: 50
+     * @param speed selected speed, eg: 50
      */
     //% subcategory=Motors
     //% blockId=rero-micro-turn-right 
