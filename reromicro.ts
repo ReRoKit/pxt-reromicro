@@ -102,7 +102,7 @@ namespace reromicro {
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns true if the sensor detects line.
-     * @param sensor position, eg: Center
+     * @param sensor position, eg: LineSensors.Center
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-sensordetectsline
@@ -111,7 +111,7 @@ namespace reromicro {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=3
     //% sensor.fieldOptions.width="200"
     //% weight=84
-    export function LineSensorDetectsLine(sensor: LineSensors = 1): boolean {
+    export function LineSensorDetectsLine(sensor: LineSensors): boolean {
 
         return ((lineSensorValues[sensor] > lineSensorThreshold[sensor]) ? true : false)
     }
@@ -119,7 +119,7 @@ namespace reromicro {
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns a single sensor's reflected infrared intensity value.
-     * @param sensor position, eg: Center
+     * @param sensor position, eg: LineSensors.Center
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-irintensity
@@ -136,9 +136,9 @@ namespace reromicro {
     /**
      * Only use this function once in "on start" if your robot doesn't detect the line properly.
      * This function sets the threshold value for each IR pair to determine white and black surfaces.
-     * @param leftThreshold, eg: 450
-     * @param centerThreshold, eg: 450
-     * @param rightThreshold, eg: 450
+     * @param leftThreshold value, eg: 450
+     * @param centerThreshold value, eg: 450
+     * @param rightThreshold value, eg: 450
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-adjustthresholds
@@ -148,7 +148,7 @@ namespace reromicro {
     //% rightThreshold.min=300 rightThreshold.max=600
     //% blockGap=20
     //% weight=80
-    export function LineAdjustThresholds(leftThreshold: number = 450, centerThreshold: number = 450, rightThreshold: number = 450): void {
+    export function LineAdjustThresholds(leftThreshold: number, centerThreshold: number, rightThreshold: number): void {
 
         lineSensorThreshold[0] = leftThreshold
         lineSensorThreshold[1] = centerThreshold
@@ -187,7 +187,7 @@ namespace reromicro {
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=99
-    export function MoveForward(speed: number = 50): void {
+    export function MoveForward(speed: number): void {
         speed = Math.clamp(0, 100, speed)
         speed = 512 - speed * 512 / 100
         
@@ -209,7 +209,7 @@ namespace reromicro {
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=98
-    export function MoveBackward(speed: number = 50): void {
+    export function MoveBackward(speed: number): void {
         speed = Math.clamp(0, 100, speed)
         speed = 511 + speed * 512 / 100
         
@@ -231,7 +231,7 @@ namespace reromicro {
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=97
-    export function TurnLeft(speed: number = 50): void {
+    export function TurnLeft(speed: number): void {
         speed = Math.clamp(0, 100, speed)
         let nLeftSpeed = 511 + speed * 512 / 100
         let nRightSpeed = 512 - speed * 512 / 100
@@ -254,7 +254,7 @@ namespace reromicro {
     //% speed.min=0 speed.max=100
     //% blockGap=10
     //% weight=96
-    export function TurnRight(speed: number = 50): void {
+    export function TurnRight(speed: number): void {
         speed = Math.clamp(0, 100, speed)
         let nLeftSpeed = 512 - speed * 512 / 100
         let nRightSpeed = 511 + speed * 512 / 100
@@ -291,7 +291,7 @@ namespace reromicro {
     //% speed.min=-100 speed.max=100
     //% blockGap=10
     //% weight=90
-    export function RunMotor(motor: Motors, speed: number = 50): void {
+    export function RunMotor(motor: Motors, speed: number): void {
         speed = (100 - speed) * 1023 / 200
         speed = Math.clamp(0, 1023, speed)
         if (motor == Motors.Left) {
