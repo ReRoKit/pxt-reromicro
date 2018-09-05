@@ -1,7 +1,7 @@
 /**
  * rero:micro Blocks
  */
-//% weight=99 color=#ff8000 icon="\uf12e" block="Rero Micro"
+//% weight=99 color=#ff8000 icon="\uf121" block="Rero Micro"
 namespace reromicro {
 
     //==============================================
