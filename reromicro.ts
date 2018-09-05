@@ -1,3 +1,22 @@
+enum LineSensors {
+    //% block=left
+    Left = 0,
+    //% block=center
+    Center = 1,
+    //% block=right
+    Right = 2
+}
+
+enum Motors {
+    //% block="left motor"
+    Left = 0,
+    //% block="right motor"
+    Right = 1,
+    //% block="both motors"
+    Both = 2
+}
+
+
 /**
  * rero:micro Blocks
  */
@@ -61,13 +80,7 @@ namespace reromicro {
     let bPinState = 1
     let nLineThreshold = 500
 
-    export enum LineSensors {
-        Left = 0,
-        Center = 1,
-        Right = 2
-    }
-
-
+    
     /**
      * Read line sensors.
      * This function reads all three IR pairs (line sensors) and stores the values in variables.
@@ -169,15 +182,7 @@ namespace reromicro {
     pins.analogSetPeriod(AnalogPin.P8, 100)
     pins.analogSetPeriod(AnalogPin.P16, 100)
 
-    export enum Motors {
-        //% block="Left Motor"
-        Left = 0,
-        //% block="Right Motor"
-        Right = 1,
-        //% block="Both Motors"
-        Both = 2
-    }
-
+    
     /**
      * Move Forward.
      * Speed = 0 - 100
