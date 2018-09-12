@@ -20,7 +20,7 @@ enum Motors {
 /**
  * rero:micro Blocks
  */
-//% weight=99 color=#ff8000 icon="\uf121" block="Rero Micro"
+//% weight=99 color=#ff8000 icon="\uf121" block="rero:micro"
 namespace reromicro {
 
     //==============================================
@@ -115,7 +115,7 @@ namespace reromicro {
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns true if the sensor detects line.
-     * @param sensor position, eg: LineSensors.Center
+     * @param sensor position, eg: LineSensors.Left
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-sensordetectsline
@@ -132,7 +132,7 @@ namespace reromicro {
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns a single sensor's reflected infrared intensity value.
-     * @param sensor position, eg: LineSensors.Center
+     * @param sensor position, eg: LineSensors.Left
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-irintensity
