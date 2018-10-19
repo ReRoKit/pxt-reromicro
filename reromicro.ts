@@ -71,15 +71,14 @@ namespace reromicro {
 
     // [left, center, right]
     const lineSensorValues = [0,0,0]
-    const lineSensorThreshold = [450,450,450]
+    const lineSensorThreshold = [700,700,700]
 
     let bFlag = true
     let nTimer = 1000
     let nMaxTimer = 1000
     let nStartTime = 0
     let bPinState = 1
-    let nLineThreshold = 500
-
+    
     
     /**
      * Read line sensors.
@@ -149,16 +148,16 @@ namespace reromicro {
     /**
      * Only use this function once in "on start" if your robot doesn't detect the line properly.
      * This function sets the threshold value for each IR pair to determine white and black surfaces.
-     * @param leftThreshold value, eg: 450
-     * @param centerThreshold value, eg: 450
-     * @param rightThreshold value, eg: 450
+     * @param leftThreshold value, eg: 700
+     * @param centerThreshold value, eg: 700
+     * @param rightThreshold value, eg: 700
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-adjustthresholds
     //% block="calibrate line sensors: left|%leftThreshold| center|%centerThreshold| right|%rightThreshold|"
-    //% leftThreshold.min=300 leftThreshold.max=600
-    //% centerThreshold.min=300 centerThreshold.max=600
-    //% rightThreshold.min=300 rightThreshold.max=600
+    //% leftThreshold.min=200 leftThreshold.max=900
+    //% centerThreshold.min=200 centerThreshold.max=900
+    //% rightThreshold.min=200 rightThreshold.max=900
     //% blockGap=20
     //% weight=80
     export function LineAdjustThresholds(leftThreshold: number, centerThreshold: number, rightThreshold: number): void {
