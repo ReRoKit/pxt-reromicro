@@ -176,7 +176,7 @@ namespace reromicro {
     
     // Initialization
     // Set PWM frequency to 10kHz.
-    // Note: If set to 20kHz, PWM duty cycle may be inverted at certain condition.
+    // Note: If set to 20kHz, PWM duty cycle may be inverted in certain condition.
     Brake()
     pins.analogSetPeriod(AnalogPin.P8, 100)
     pins.analogSetPeriod(AnalogPin.P16, 100)
@@ -195,7 +195,7 @@ namespace reromicro {
     //% weight=99
     export function MoveForward(speed: number): void {
         speed = Math.clamp(0, 100, speed)
-        speed = 512 - speed * 512 / 100
+        speed = 511 + speed * 512 / 100
         
         pins.analogWritePin(AnalogPin.P8, speed)
         pins.analogWritePin(AnalogPin.P16, speed)
@@ -217,7 +217,7 @@ namespace reromicro {
     //% weight=98
     export function MoveBackward(speed: number): void {
         speed = Math.clamp(0, 100, speed)
-        speed = 511 + speed * 512 / 100
+        speed = 512 - speed * 512 / 100
         
         pins.analogWritePin(AnalogPin.P8, speed)
         pins.analogWritePin(AnalogPin.P16, speed)
