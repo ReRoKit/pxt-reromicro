@@ -239,8 +239,8 @@ namespace reromicro {
     //% weight=97
     export function TurnLeft(speed: number): void {
         speed = Math.clamp(0, 100, speed)
-        let nLeftSpeed = 511 + speed * 512 / 100
-        let nRightSpeed = 512 - speed * 512 / 100
+        let nLeftSpeed = 512 - speed * 512 / 100
+        let nRightSpeed = 511 + speed * 512 / 100
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
@@ -262,8 +262,8 @@ namespace reromicro {
     //% weight=96
     export function TurnRight(speed: number): void {
         speed = Math.clamp(0, 100, speed)
-        let nLeftSpeed = 512 - speed * 512 / 100
-        let nRightSpeed = 511 + speed * 512 / 100
+        let nLeftSpeed = 511 + speed * 512 / 100
+        let nRightSpeed = 512 - speed * 512 / 100
 
         pins.analogWritePin(AnalogPin.P8, nLeftSpeed)
         pins.analogWritePin(AnalogPin.P16, nRightSpeed)
@@ -298,7 +298,7 @@ namespace reromicro {
     //% blockGap=10
     //% weight=90
     export function RunMotor(motor: Motors, speed: number): void {
-        speed = (100 - speed) * 1023 / 200
+        speed = (100 + speed) * 1024 / 200
         speed = Math.clamp(0, 1023, speed)
         if (motor == Motors.Left) {
             pins.analogWritePin(AnalogPin.P8, speed)
