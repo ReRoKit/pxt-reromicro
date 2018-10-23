@@ -13,7 +13,7 @@ This robot also has 7x NeoPixels (programmable RGB LEDs) built-in. See [Microsof
 
 ```blocks
 // Create a NeoPixel strip at pin P1 with 7 LEDs and either standard RGB format.
-strip = neopixel.create(DigitalPin.P1, 7, NeoPixelMode.RGB)
+let strip = neopixel.create(DigitalPin.P1, 7, NeoPixelMode.RGB)
 
 // Reduce the brightness to 50.
 strip.setBrightness(50)
@@ -68,7 +68,7 @@ basic.forever(function () {
     } else {
         reromicro.MoveForward(50)
     }
-}
+})
 ```
 
 
@@ -94,7 +94,7 @@ basic.forever(function () {
     } else if (reromicro.LineSensorDetectsLine(LineSensors.Left)) {
         reromicro.TurnLeft(40)
     }
-}
+})
 ```
 
 * Use ``||LineSensorDetectsLine||`` to get the boolean value of line detection. Returns ``true`` when line is detected, otherwise ``false``.
