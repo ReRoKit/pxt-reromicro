@@ -107,14 +107,14 @@ namespace reromicro {
                     bFlag = false
                 }
             }
-            lineSensorValues[i] = nTimer
+            lineSensorValues[i] = Math.clamp(0, 1000, nTimer)
         }
     }
 
     /**
      * ! Use "read line sensors" function first before this.
-     * This function returns true if the sensor detects line.
-     * @param sensor position, eg: LineSensors.Left
+     * This function returns ''true'' if the sensor detects dark line, otherwise ''false''
+     * @param sensor position, eg: LineSensors.center
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-sensordetectsline
@@ -130,7 +130,8 @@ namespace reromicro {
 
     /**
      * ! Use "read line sensors" function first before this.
-     * This function returns a single sensor's reflected infrared intensity value.
+     * This function returns a single sensor's reflected infrared intensity value,
+     * between 0 and 1000.
      * @param sensor position, eg: LineSensors.Left
      */
     //% subcategory=Sensors
