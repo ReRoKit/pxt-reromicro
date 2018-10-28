@@ -52,7 +52,7 @@ namespace reromicro {
         // read pulse
         const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 38);
 
-        if (d == 0){
+        if (d == 0) {
             return 255
         }
 
@@ -70,16 +70,16 @@ namespace reromicro {
     let lineSensorPins = [leftLineSensor, centerLineSensor, rightLineSensor]
 
     // [left, center, right]
-    const lineSensorValues = [0,0,0]
-    const lineSensorThreshold = [650,650,650]
+    const lineSensorValues = [0, 0, 0]
+    const lineSensorThreshold = [650, 650, 650]
 
     let bFlag = true
     let nTimer = 1000
     let nMaxTimer = 1000
     let nStartTime = 0
     let bPinState = 1
-    
-    
+
+
     /**
      * Read line sensors.
      * This function reads all three IR pairs (line sensors) and stores the values in variables.
@@ -91,9 +91,9 @@ namespace reromicro {
     //% blockGap=10
     //% weight=85
     export function ReadLineSensors(): void {
-        
+
         // Read sensors
-        for(let i=0; i<3; i++) {
+        for (let i = 0; i < 3; i++) {
             nTimer = 1000
             bFlag = true
             nStartTime = input.runningTimeMicros()
@@ -170,11 +170,11 @@ namespace reromicro {
 
 
 
-    
+
     //==============================================
     //  Motors
     //==============================================
-    
+
     // Initialization
     // Set PWM frequency to 10kHz.
     // Note: If set to 20kHz, PWM duty cycle may be inverted in certain condition.
@@ -182,7 +182,7 @@ namespace reromicro {
     pins.analogSetPeriod(AnalogPin.P8, 100)
     pins.analogSetPeriod(AnalogPin.P16, 100)
 
-    
+
     /**
      * Move Forward.
      * Speed = 0 - 100
@@ -197,7 +197,7 @@ namespace reromicro {
     export function MoveForward(speed: number): void {
         speed = Math.clamp(0, 100, speed)
         speed = 511 + speed * 512 / 100
-        
+
         pins.analogWritePin(AnalogPin.P8, speed)
         pins.analogWritePin(AnalogPin.P16, speed)
         // pins.analogSetPeriod(AnalogPin.P8, 50)
@@ -219,7 +219,7 @@ namespace reromicro {
     export function MoveBackward(speed: number): void {
         speed = Math.clamp(0, 100, speed)
         speed = 512 - speed * 512 / 100
-        
+
         pins.analogWritePin(AnalogPin.P8, speed)
         pins.analogWritePin(AnalogPin.P16, speed)
         // pins.analogSetPeriod(AnalogPin.P8, 50)
@@ -320,5 +320,5 @@ namespace reromicro {
         }
     }
 
-    
+
 }
