@@ -1,6 +1,6 @@
 {
-    "name": "rero micro",
-    "version": "0.0.47",
+    "name": "reromicro",
+    "version": "0.0.48",
     "description": "MakeCode Package for rero:micro robot",
     "license": "MIT",
     "dependencies": {
