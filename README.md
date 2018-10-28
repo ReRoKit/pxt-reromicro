@@ -5,6 +5,7 @@ This MakeCode package/extension/library provides driver for rero:micro education
 ![rero:micro](https://raw.githubusercontent.com/rerokit/pxt-reromicro/master/icon.png)  
 
 
+
 ## Let's make some noise!
 
 * rero:micro's built-in piezo buzzer works with the default ``||Music||`` blocks that come with MakeCode.
@@ -16,37 +17,13 @@ music.beginMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
 
 
 
-## Colour Splash!
-
-### ~ hint
-This robot also has 7x NeoPixels (programmable RGB LEDs) built-in. See [Microsoft/pxt-neopixel](https://makecode.microbit.org/pkg/microsoft/pxt-neopixel) for NeoPixels support. 
-### ~
-
-```blocks
-// Create a NeoPixel strip at pin P1 with 7 LEDs and either standard RGB format.
-let strip: neopixel.Strip = null
-strip = neopixel.create(DigitalPin.P1, 7, NeoPixelMode.RGB)
-
-// Reduce the brightness to 50.
-strip.setBrightness(50)
-
-// Show red colour for 1 sec.
-strip.showColor(neopixel.colors(NeoPixelColors.Red))
-basic.pause(1000)
-
-// Show blue colour for 1 sec.
-strip.showColor(neopixel.colors(NeoPixelColors.Blue))
-basic.pause(1000)
-
-// Show rainbow colours
-strip.showRainbow(1, 310)
-```
-
-
-
 ## Let's move it, move it~
 
-* Use ``||run (x motor) at (speed)||`` to control the each motor individually. Negative speed reverses the robot (eg: ``-50``), positive speed moves it forward (eg: ``80``) and set to zero (``0``) to brake. Note that the direction refers to robot's movement, NOT each motor's rotating direction (clockwise/counter-clockwise).
+* Use ``||move forward at (speed)||``, ``||move backward at (speed)||``, ``||turn left at (speed)||`` and ``||turn right at (speed)||`` to navigate rero:micro. The value for speed is between 0 and 100.
+
+* Use ``||brake||`` to brake rero:micro.
+
+* Use ``||run (motor) at (speed)||`` to control the each motor individually. Negative speed (-100 to -1) reverses the robot (eg: ``-50``), positive speed (1 to 100) moves it forward (eg: ``80``) and zero speed (``0``) brakes the motor. Note that the direction refers to rero:micro's movement, NOT motor's rotating direction.
 
 ```blocks
 // rero:micro move forward at speed 50, for 1 second
@@ -83,6 +60,7 @@ basic.forever(function () {
 ```
 
 
+
 ## Line tracking
 
 ### ~ hint
@@ -115,6 +93,37 @@ basic.forever(function () {
     }
 })
 ```
+
+
+
+## Colour Splash!
+
+* This robot also has 7x NeoPixels (WS2812B programmable RGB LEDs) built-in. 
+
+### ~ hint
+See [Microsoft/pxt-neopixel](https://makecode.microbit.org/pkg/microsoft/pxt-neopixel) for NeoPixels support. 
+### ~
+
+```blocks
+// Create a NeoPixel strip at pin P1 with 7 LEDs and either standard RGB format.
+let strip: neopixel.Strip = null
+strip = neopixel.create(DigitalPin.P1, 7, NeoPixelMode.RGB)
+
+// Reduce the brightness to 50.
+strip.setBrightness(50)
+
+// Show red colour for 1 sec.
+strip.showColor(neopixel.colors(NeoPixelColors.Red))
+basic.pause(1000)
+
+// Show blue colour for 1 sec.
+strip.showColor(neopixel.colors(NeoPixelColors.Blue))
+basic.pause(1000)
+
+// Show rainbow colours.
+strip.showRainbow(1, 310)
+```
+
 
 
 ## License
