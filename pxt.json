@@ -10,5 +10,9 @@
         "README.md",
         "reromicro.ts"
     ],
-    "public": true
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "installedVersion": "workspace:d96b3423-f69e-46b0-a361-7dd358b203b7"
 }
