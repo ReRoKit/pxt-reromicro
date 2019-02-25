@@ -1,6 +1,7 @@
 # rero:micro Extension for Microsoft MakeCode
 
 This MakeCode package/extension/library provides driver for [**rero:micro** educational robot](https://www.cytron.io/micro:bit/p-reromicro?currency=usd).
+Read this document at [makecode.microbit.org](https://makecode.microbit.org/pkg/rerokit/pxt-reromicro) or [github.com](https://github.com/ReRoKit/pxt-reromicro).
 
 ![rero:micro](https://raw.githubusercontent.com/rerokit/pxt-reromicro/master/icon.png)
 
