@@ -73,12 +73,6 @@ namespace reromicro {
     const lineSensorValues = [0, 0, 0]
     const lineSensorThreshold = [580, 580, 580]
 
-    let bFlag = true
-    let nTimer = 1000
-    let nMaxTimer = 1000
-    let nStartTime = 0
-    let bPinState = 1
-
 
     /**
      * Read line sensors.
@@ -92,10 +86,19 @@ namespace reromicro {
     //% weight=85
     export function ReadLineSensors(): void {
 
+        let bFlag = true
+        let nTimer = 1500
+        let nMaxTimer = 1500
+        let nStartTime = 0
+        let bPinState = 1
+
         // Read sensors
         for (let i = 0; i < 3; i++) {
-            nTimer = 1000
+            nTimer = 1500
             bFlag = true
+            if (input.runningTimeMicros() >= 62536) {
+                control.waitMicros(3000)
+            }
             nStartTime = input.runningTimeMicros()
             pins.digitalWritePin(lineSensorPins[i], 1)
             control.waitMicros(10)
@@ -107,7 +110,7 @@ namespace reromicro {
                     bFlag = false
                 }
             }
-            lineSensorValues[i] = Math.clamp(0, 1000, nTimer)
+            lineSensorValues[i] = Math.clamp(0, 1500, nTimer)
         }
     }
 
@@ -131,7 +134,7 @@ namespace reromicro {
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns a single sensor's reflected infrared intensity value,
-     * between 0 and 1000.
+     * between 0 and 1500.
      * @param sensor position, eg: LineSensors.Left
      */
     //% subcategory=Sensors
@@ -156,9 +159,9 @@ namespace reromicro {
     //% subcategory=Sensors
     //% blockId=rero-micro-line-adjustthresholds
     //% block="calibrate line sensors: left|%leftThreshold| center|%centerThreshold| right|%rightThreshold|"
-    //% leftThreshold.min=200 leftThreshold.max=900
-    //% centerThreshold.min=200 centerThreshold.max=900
-    //% rightThreshold.min=200 rightThreshold.max=900
+    //% leftThreshold.min=200 leftThreshold.max=1200
+    //% centerThreshold.min=200 centerThreshold.max=1200
+    //% rightThreshold.min=200 rightThreshold.max=1200
     //% blockGap=20
     //% weight=80
     export function LineAdjustThresholds(leftThreshold: number, centerThreshold: number, rightThreshold: number): void {
