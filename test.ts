@@ -16,6 +16,7 @@ input.onButtonPressed(Button.B, function () {
 })
 basic.showIcon(IconNames.Heart)
 music.beginMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
+basic.pause(3000)
 bMode = true
 basic.forever(function () {
     reromicro.ReadLineSensors()
@@ -23,14 +24,20 @@ basic.forever(function () {
         if (reromicro.ReadUltrasonic() < 15) {
             reromicro.Brake()
         } else {
-            if (reromicro.LineSensorDetectsLine(LineSensors.Center)) {
-                reromicro.MoveForward(50)
+            if (reromicro.LineSensorDetectsLine(LineSensors.Right) && reromicro.LineSensorDetectsLine(LineSensors.Center)) {
+                reromicro.RunMotor(Motors.Left, 30)
+                reromicro.RunMotor(Motors.Right, 15)
+            } else if (reromicro.LineSensorDetectsLine(LineSensors.Left) && reromicro.LineSensorDetectsLine(LineSensors.Center)) {
+                reromicro.RunMotor(Motors.Left, 15)
+                reromicro.RunMotor(Motors.Right, 30)
+            } else if (reromicro.LineSensorDetectsLine(LineSensors.Center)) {
+                reromicro.MoveForward(30)
             } else if (reromicro.LineSensorDetectsLine(LineSensors.Right)) {
-                reromicro.RunMotor(Motors.Left, 50)
+                reromicro.RunMotor(Motors.Left, 30)
                 reromicro.RunMotor(Motors.Right, 0)
             } else if (reromicro.LineSensorDetectsLine(LineSensors.Left)) {
                 reromicro.RunMotor(Motors.Left, 0)
-                reromicro.RunMotor(Motors.Right, 50)
+                reromicro.RunMotor(Motors.Right, 30)
             }
         }
     } else {

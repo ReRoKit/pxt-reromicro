@@ -112,6 +112,7 @@ namespace reromicro {
     //     serial.writeLine("")
     // }
 
+
     /**
      * Read line sensors.
      * This function reads all three IR pairs (line sensors) and stores the values in variables.
