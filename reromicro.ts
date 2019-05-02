@@ -60,6 +60,21 @@ namespace reromicro {
     }
 
 
+    //==============================================
+    //  I2C EEPROM
+    //==============================================
+    const AT24_I2C_ADDR = 80;
+    const lineEepromAddress = 100
+
+    /**
+     * read 32-bit data from address
+     * @param addr eeprom address, eg: 4
+     */
+    function EE_Read32bit(addr: number): number {
+        pins.i2cWriteNumber(AT24_I2C_ADDR, addr, NumberFormat.UInt8BE);
+        return pins.i2cReadNumber(AT24_I2C_ADDR, NumberFormat.UInt32BE);
+    }
+
 
     //==============================================
     //  Line Sensors
@@ -67,12 +82,35 @@ namespace reromicro {
     let rightLineSensor = DigitalPin.P13
     let centerLineSensor = DigitalPin.P14
     let leftLineSensor = DigitalPin.P15
+    // X[left, center, right]
     let lineSensorPins = [leftLineSensor, centerLineSensor, rightLineSensor]
-
-    // [left, center, right]
-    const lineSensorValues = [0, 0, 0]
-    const lineSensorThreshold = [580, 580, 580]
-
+    let lineSensorMax = [1500, 1500, 1500]
+    let lineSensorMin = [0, 0, 0]
+    let lineSensorValues = [0, 0, 0]
+    let lineSensorThreshold = [580, 580, 580]
+    
+    // read line sensors max & min values from EEPROM
+    let ui32EeData = 0
+    ui32EeData = EE_Read32bit(lineEepromAddress)
+    // verify magic number 'rero'
+    if (ui32EeData == 1919251055) {
+        for (let i = 0; i < 3; i++) {
+            ui32EeData = EE_Read32bit(lineEepromAddress + 4 + (i * 4))
+            lineSensorMax[i] = ui32EeData >> 16
+            lineSensorMin[i] = ui32EeData & 0xFFFF
+            lineSensorThreshold[i] = ((lineSensorMax[i] + lineSensorMin[i]) >> 1) - ((lineSensorMax[i] - lineSensorMin[i]) >> 2)
+        }
+    }
+    // debug
+    // for (let i = 0; i < 3; i++) {
+    //     serial.writeString("Max:")
+    //     serial.writeNumber(lineSensorMax[i])
+    //     serial.writeString(" Min:")
+    //     serial.writeNumber(lineSensorMin[i])
+    //     serial.writeString(" Thres:")
+    //     serial.writeNumber(lineSensorThreshold[i])
+    //     serial.writeLine("")
+    // }
 
     /**
      * Read line sensors.
