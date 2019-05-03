@@ -135,8 +135,8 @@ namespace reromicro {
         for (let i = 0; i < 3; i++) {
             nTimer = 1500
             bFlag = true
-            if (input.runningTimeMicros() >= 62536) {
-                control.waitMicros(3000)
+            if (input.runningTimeMicros() >= 62000) {
+                control.waitMicros(4000)
             }
             nStartTime = input.runningTimeMicros()
             pins.digitalWritePin(lineSensorPins[i], 1)
