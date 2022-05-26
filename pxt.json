@@ -1,6 +1,6 @@
 {
     "name": "reromicro",
-    "version": "0.0.51",
+    "version": "0.0.52",
     "description": "MakeCode Package for rero:micro robot",
     "license": "MIT",
     "dependencies": {
@@ -14,5 +14,8 @@
         "test.ts"
     ],
     "public": true,
-    "installedVersion": "workspace:29764e9a-5b20-457f-bc71-70a015b9e0b4"
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
 }

@@ -24,12 +24,25 @@ enum Motors {
 namespace reromicro {
 
     //==============================================
+    //  Obtain micro:bit board version 
+    //  Ref: https://support.microbit.org/support/solutions/articles/19000130254-identify-the-version-number-of-the-micro-bit-in-your-program
+    //==============================================
+    let board_ver = control.hardwareVersion()
+    
+    //==============================================
     //  Ultrasonic Sensor (HC-SR04)
     //==============================================
     let trig = DigitalPin.P2
     let echo = DigitalPin.P2
     let maxCmDistance = 255
-
+    let const_2divspeed = 58
+    
+    // special tuning for microbit v1 
+    // to get a more accurate value in cm
+    if (board_ver == "1") {
+        const_2divspeed = 40
+    }
+    
     /**
      * Read distance in centimeters (cm) with ultrasonic sensor.
      * Distance = 3cm - 255cm.
@@ -50,13 +63,13 @@ namespace reromicro {
         pins.digitalWritePin(trig, 0);
 
         // read pulse
-        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 38);
+        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * const_2divspeed);
 
         if (d == 0) {
             return 255
         }
 
-        return Math.idiv(d, 38) // tuned for microbit to get the right value in cm
+        return Math.idiv(d, const_2divspeed)
     }
 
 
