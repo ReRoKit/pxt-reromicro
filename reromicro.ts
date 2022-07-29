@@ -100,7 +100,7 @@ namespace reromicro {
     let lineSensorMax = [1500, 1500, 1500]
     let lineSensorMin = [0, 0, 0]
     let lineSensorValues = [0, 0, 0]
-    let lineSensorThreshold = [580, 580, 580]
+    let lineSensorThreshold = [500, 500, 500]
     
     // read line sensors max & min values from EEPROM
     let ui32EeData = 0
@@ -114,16 +114,7 @@ namespace reromicro {
             lineSensorThreshold[i] = ((lineSensorMax[i] + lineSensorMin[i]) >> 1) - ((lineSensorMax[i] - lineSensorMin[i]) >> 2)
         }
     }
-    // debug
-    // for (let i = 0; i < 3; i++) {
-    //     serial.writeString("Max:")
-    //     serial.writeNumber(lineSensorMax[i])
-    //     serial.writeString(" Min:")
-    //     serial.writeNumber(lineSensorMin[i])
-    //     serial.writeString(" Thres:")
-    //     serial.writeNumber(lineSensorThreshold[i])
-    //     serial.writeLine("")
-    // }
+
 
 
     /**
@@ -138,34 +129,41 @@ namespace reromicro {
     //% weight=85
     export function ReadLineSensors(): void {
 
-        let bFlag = true
         let nTimer = 1500
         let nMaxTimer = 1500
         let nStartTime = 0
-        let bPinState = 1
+        let nElapsedTime = 0
 
         // Read sensors
         for (let i = 0; i < 3; i++) {
-            nTimer = 1500
-            bFlag = true
-            if (input.runningTimeMicros() >= 62000) {
-                control.waitMicros(4000)
-            }
-            nStartTime = input.runningTimeMicros()
-            pins.digitalWritePin(lineSensorPins[i], 1)
-            control.waitMicros(10)
-            pins.setPull(lineSensorPins[i], PinPullMode.PullNone)
-            while (bFlag == true && (input.runningTimeMicros() - nStartTime) < nMaxTimer) {
-                bPinState = pins.digitalReadPin(lineSensorPins[i])
-                if (bPinState == 0) {
-                    nTimer = input.runningTimeMicros() - nStartTime
-                    bFlag = false
+
+            do {
+                nStartTime = input.runningTimeMicros()
+                pins.digitalWritePin(lineSensorPins[i], 1)
+                control.waitMicros(70)
+                pins.setPull(lineSensorPins[i], PinPullMode.PullNone)
+                while (1) {
+                    nElapsedTime = input.runningTimeMicros() - nStartTime
+
+                    if (pins.digitalReadPin(lineSensorPins[i]) == 0) {
+                        nTimer = nElapsedTime
+                        break
+                    }
+                    else if (nElapsedTime >= nMaxTimer) {
+                        nTimer = nMaxTimer
+                        break
+                    }
+                    else if (nElapsedTime < 0) {
+                        break
+                    }
                 }
-            }
-            lineSensorValues[i] = Math.clamp(0, 1500, nTimer)
+            } while (nElapsedTime < 0)
+
+            lineSensorValues[i] = Math.clamp(0, nMaxTimer, nTimer)
         }
     }
 
+    
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns ''true'' if the sensor detects dark line, otherwise ''false''
@@ -183,6 +181,7 @@ namespace reromicro {
         return ((lineSensorValues[sensor] > lineSensorThreshold[sensor]) ? true : false)
     }
 
+    
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns a single sensor's reflected infrared intensity value,
@@ -201,19 +200,20 @@ namespace reromicro {
         return lineSensorValues[sensor]
     }
 
+    
     /**
      * Only use this function once in "on start" if your robot doesn't detect the line properly.
      * This function sets the threshold value for each IR pair to determine white and black surfaces.
-     * @param leftThreshold value, eg: 580
-     * @param centerThreshold value, eg: 580
-     * @param rightThreshold value, eg: 580
+     * @param leftThreshold value, eg: 500
+     * @param centerThreshold value, eg: 500
+     * @param rightThreshold value, eg: 500
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-adjustthresholds
     //% block="calibrate line sensors: left|%leftThreshold| center|%centerThreshold| right|%rightThreshold|"
-    //% leftThreshold.min=200 leftThreshold.max=1200
-    //% centerThreshold.min=200 centerThreshold.max=1200
-    //% rightThreshold.min=200 rightThreshold.max=1200
+    //% leftThreshold.min=0 leftThreshold.max=1500
+    //% centerThreshold.min=0 centerThreshold.max=1500
+    //% rightThreshold.min=0 rightThreshold.max=1500
     //% blockGap=20
     //% weight=80
     export function LineAdjustThresholds(leftThreshold: number, centerThreshold: number, rightThreshold: number): void {
