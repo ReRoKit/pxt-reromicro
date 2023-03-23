@@ -63,7 +63,8 @@ namespace reromicro {
         pins.digitalWritePin(trig, 0);
 
         // read pulse
-        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * const_2divspeed);
+        // The maximum duration need to add in 20ms of deadzone.
+        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * const_2divspeed + 20000);
 
         if (d == 0) {
             return 255
