@@ -168,7 +168,7 @@ namespace reromicro {
     /**
      * ! Use "read line sensors" function first before this.
      * This function returns ''true'' if the sensor detects dark line, otherwise ''false''
-     * @param sensor position, eg: LineSensors.center
+     * @param sensor position, eg: LineSensors.Left
      */
     //% subcategory=Sensors
     //% blockId=rero-micro-line-sensordetectsline
